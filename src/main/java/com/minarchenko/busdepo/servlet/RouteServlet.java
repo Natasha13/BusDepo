@@ -56,7 +56,7 @@ import java.util.List;
                 log("SQL Exception: ", e);
             }
 
-            req.setAttribute("route1", routes);
+            req.setAttribute("routes1", routes);
             RequestDispatcher rd = req.getRequestDispatcher("route.jsp");
             rd.forward(req, resp);
         }

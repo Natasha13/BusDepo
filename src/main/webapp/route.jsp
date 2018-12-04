@@ -11,7 +11,7 @@
         <th>Route Name</th>
     </tr>
 
-    <c:forEach var = "route1" items = "${routes}">
+    <c:forEach var = "route1" items = "${routes1}">
         <tr>
             <td> <c:out value = "${route1.id}"/></td>
             <td> <c:out value = "${route1.routeName}"/></td>
