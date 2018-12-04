@@ -61,7 +61,7 @@
     <%--<h3 class="widget-title">Категории</h3>--%>
     <%--<ul class="widget-list">--%>
         <%--<li><a href="index.html">Home page</a></li>--%>
-        <%--<li><a href="musings.html">Routes</a></li>--%>
+        <%--<li><a href="musings.html">Route</a></li>--%>
         <%--<li><a href="town.html">Drivers</a></li>--%>
         <%--<li><a href="links.html">Buses</a></li>--%>
     <%--</ul>--%>

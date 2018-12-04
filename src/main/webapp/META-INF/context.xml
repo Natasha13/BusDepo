@@ -7,4 +7,11 @@
             driverClassName="com.mysql.jdbc.Driver"
             username="root" password="root"
     />
+    <!--<Resource-->
+            <!--name="Route" type="javax.sql.DataSource"-->
+            <!--maxActive="100" maxIdle="30" maxWait="10000"-->
+            <!--url="jdbc:mysql://localhost:3306/Route?serverTimezone=UTC"-->
+            <!--driverClassName="com.mysql.jdbc.Driver"-->
+            <!--username="root" password="root"-->
+    <!--/>-->
 </Context>
