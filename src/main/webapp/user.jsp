@@ -11,7 +11,7 @@
     <tr>
         <th>ID</th>
         <th>User Name</th>
-        <th>Logine</th>
+        <th>Login</th>
         <th>Password</th>
         <th>Spesiality</th>
     </tr>
