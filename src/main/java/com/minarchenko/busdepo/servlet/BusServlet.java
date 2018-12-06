@@ -45,8 +45,8 @@ public class BusServlet extends HttpServlet {
                 try (ResultSet resultSet = statement.executeQuery()) {
                     while (resultSet.next()) {
                         Bus bus = new Bus(
-                                resultSet.getString("bus_number"),
-                                resultSet.getInt("id"));
+                                resultSet.getInt("id"),
+                                resultSet.getString("bus_number"));
                         buses.add(bus);
                     }
                 }

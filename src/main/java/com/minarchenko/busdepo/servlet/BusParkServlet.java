@@ -1,6 +1,9 @@
 package com.minarchenko.busdepo.servlet;
 
+import com.minarchenko.busdepo.model.Bus;
 import com.minarchenko.busdepo.model.BusPark;
+import com.minarchenko.busdepo.model.Route;
+import com.minarchenko.busdepo.model.User;
 
 import javax.annotation.Resource;
 import javax.servlet.RequestDispatcher;
@@ -28,29 +31,45 @@ public class BusParkServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String paramName = "id";
-        String paramValue = req.getParameter(paramName); //
+  //      String paramValue = req.getParameter(paramName); //
 
         List<BusPark> busParks = new ArrayList<>();
 
         String sql = "";
-        if (paramValue != null) {
-            sql = "SELECT id,bus_id, user_id, route_id, accepted FROM bus_park WHERE id=?";
-        } else {
-            sql = "SELECT id,bus_id, user_id, route_id, accepted FROM bus_park";
-        }
+            sql = "SELECT bp.id as id ,bus_id,b.bus_number bus_number," +
+                    " user_id, user_name, login, password, user_spesiality," +
+                    " route_id,route_name, accepted " +
+                    "FROM bus_park bp " +
+                    "LEFT JOIN buses b ON bp.bus_id = id " +
+                    "LEFT JOIN users ON bp.user_id = users.Id " +
+                    "LEFT JOIN routes ON bp.route_id = routes.Id ";
+
         try (Connection connection = dataSource.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                if (paramValue != null) {
-                    statement.setString(1, paramValue);
-                }
                 try (ResultSet resultSet = statement.executeQuery()) {
                     while (resultSet.next()) {
+                        Bus bus=new Bus(
+                                resultSet.getInt("bus_id"),
+                                resultSet.getString("bus_number")
+                        );
+                        User user=new User(
+                                resultSet.getInt("user_id"),
+                                resultSet.getString("user_name"),
+                                resultSet.getString("login"),
+                                resultSet.getString("password"),
+                                resultSet.getString("user_spesiality")
+                        );
+                        Route route=new Route(
+                                resultSet.getInt("route_id"),
+                                resultSet.getString("route_name")
+                        );
                         BusPark busPark = new BusPark(
                                 resultSet.getInt("id"),
-                                resultSet.getInt("bus_id"),
-                                resultSet.getInt("user_id"),
-                                resultSet.getInt("route_id"),
-                                resultSet.getBoolean("accepted"));
+                                bus,
+                                route,
+                                user,
+                                resultSet.getBoolean("accepted")
+                        );
                         busParks.add(busPark);
                     }
                 }

@@ -1,12 +1,12 @@
 package com.minarchenko.busdepo.model;
 
 public class Bus {
-    private String busNumber;
     private int id;
+    private String busNumber;
 
-    public Bus(String busNumber, int id) {
-        this.busNumber = busNumber;
+    public Bus(int id, String busNumber) {
         this.id = id;
+        this.busNumber = busNumber;
     }
 
     public String getBusNumber() {
@@ -28,8 +28,8 @@ public class Bus {
     @Override
     public String toString() {
         return "Bus{" +
-                "busNumber='" + busNumber + '\'' +
                 ", id=" + id +
+                "busNumber='" + busNumber + '\'' +
                 '}';
     }
 }

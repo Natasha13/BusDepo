@@ -2,16 +2,16 @@ package com.minarchenko.busdepo.model;
 
 public class BusPark {
     private int id;
-    private int bus_id;
-    private int user_id;
-    private int route_id;
-    private boolean accepted;
+    private Bus bus;
+    private Route route;
+    private User user;
+    boolean accepted;
 
-    public BusPark(int id, int bus_id, int user_id, int route_id, boolean accepted) {
+    public BusPark(int id, Bus bus, Route route, User user, boolean accepted) {
         this.id = id;
-        this.bus_id = bus_id;
-        this.user_id = user_id;
-        this.route_id = route_id;
+        this.bus = bus;
+        this.route = route;
+        this.user = user;
         this.accepted = accepted;
     }
 
@@ -19,9 +19,9 @@ public class BusPark {
     public String toString() {
         return "BusPark{" +
                 "id=" + id +
-                ", bus_id=" + bus_id +
-                ", user_id=" + user_id +
-                ", route_id=" + route_id +
+                ", bus=" + bus +
+                ", route=" + route +
+                ", user=" + user +
                 ", accepted=" + accepted +
                 '}';
     }
@@ -34,28 +34,28 @@ public class BusPark {
         this.id = id;
     }
 
-    public int getBus_id() {
-        return bus_id;
+    public Bus getBus() {
+        return bus;
     }
 
-    public void setBus_id(int bus_id) {
-        this.bus_id = bus_id;
+    public void setBus(Bus bus) {
+        this.bus = bus;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public Route getRoute() {
+        return route;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setRoute(Route route) {
+        this.route = route;
     }
 
-    public int getRoute_id() {
-        return route_id;
+    public User getUser() {
+        return user;
     }
 
-    public void setRoute_id(int route_id) {
-        this.route_id = route_id;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public boolean isAccepted() {
