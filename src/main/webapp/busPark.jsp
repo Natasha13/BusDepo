@@ -18,10 +18,10 @@
     <c:forEach var = "busPark1" items = "${busParks1}">
         <tr>
             <td> <c:out value = "${busPark1.id}"/></td>
-            <td> <c:out value = "${busPark1.bus_id}"/></td>
-            <td> <c:out value = "${busPark1.user_id}"/></td>
-            <td> <c:out value = "${busPark1.route_id}"/></td>
-            <td> <c:out value = "${busPark1.accepted}"/></td>
+            <td> <c:out value = "${busPark1.bus.id}"/></td>
+            <%--<td> <c:out value = "${busPark1.user_id}"/></td>--%>
+            <%--<td> <c:out value = "${busPark1.route_id}"/></td>--%>
+            <%--<td> <c:out value = "${busPark1.accepted}"/></td>--%>
         </tr>
     </c:forEach>
 </table>

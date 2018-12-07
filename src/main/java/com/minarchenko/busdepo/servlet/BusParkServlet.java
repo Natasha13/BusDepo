@@ -40,7 +40,7 @@ public class BusParkServlet extends HttpServlet {
                     " user_id, user_name, login, password, user_spesiality," +
                     " route_id,route_name, accepted " +
                     "FROM bus_park bp " +
-                    "LEFT JOIN buses b ON bp.bus_id = id " +
+                    "LEFT JOIN buses b ON bp.bus_id = b.id " +
                     "LEFT JOIN users ON bp.user_id = users.Id " +
                     "LEFT JOIN routes ON bp.route_id = routes.Id ";
 
