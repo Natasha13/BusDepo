@@ -60,5 +60,24 @@ import java.util.List;
             RequestDispatcher rd = req.getRequestDispatcher("route.jsp");
             rd.forward(req, resp);
         }
+
+        @Override
+        protected void doPost(HttpServletRequest request,HttpServletResponse resp)
+            throws IOException{
+            String p1=request.getParameter("p1");
+
+            List<Route> route=new ArrayList<>();
+            String sql="INSERT INTO routes (route_name) values(?)";
+
+                try(Connection connection= dataSource.getConnection()){
+                    try(PreparedStatement statement=connection.prepareStatement(sql)) {
+                        statement.setString(1,request.getParameter("route_name"));
+                        statement.execute();
+                    }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            resp.sendRedirect("/routes");
+        }
     }
 

@@ -5,6 +5,11 @@
     <title>Title</title>
 </head>
 <body>
+<form autocomplete="off"  action="routes" method="post" >
+    <h2> Route name: <input type="text" name="route_name" value=" "><br></h2>
+    <input type="submit" value="Execute"> <br>
+</form>
+
 <table border = "1" width = "100%">
     <tr>
         <th>ID</th>
