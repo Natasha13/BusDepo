@@ -1,7 +1,6 @@
 <%@ page import="java.util.Date" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<!--suppress ALL, XmlPathReference -->
 <html>
 <head>
     <title>Title</title>
@@ -46,10 +45,10 @@
 <div id="content">
     <div id="article">
         <ul class="widget-list">
-            <li><a href="index.html">Home page</a></li>
-            <li><a href="musings.html">Routes</a></li>
-            <li><a href="town.html">Drivers</a></li>
-            <li><a href="links.html">Buses</a></li>
+            <li><a href="/busPark">Home page</a></li>
+            <li><a href="/routes">Routes</a></li>
+            <li><a href="/users">Drivers</a></li>
+            <li><a href="/buses">Buses</a></li>
         </ul>
     </div>
     <%--<div id="reclam">--%>

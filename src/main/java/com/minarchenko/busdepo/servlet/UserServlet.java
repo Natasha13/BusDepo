@@ -63,6 +63,32 @@ public class UserServlet extends HttpServlet {
         RequestDispatcher rd = req.getRequestDispatcher("user.jsp");
         rd.forward(req, resp);
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        String p1 = req.getParameter("p1");
+        String p2 = req.getParameter("p2");
+        String p3 = req.getParameter("p3");
+        String p4 = req.getParameter("p4");
+
+        List<User> user = new ArrayList<>();
+        String sql = "INSERT INTO users (user_name, login, password, user_spesiality ) values(?,?,?,?)";
+
+        try (Connection connection = dataSource.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setString(1, req.getParameter("user_name"));
+                statement.setString(2, req.getParameter("login"));
+                statement.setString(3, req.getParameter("password"));
+                statement.setString(4, req.getParameter("user_spesiality"));
+                statement.execute();
+            }
+        } catch (SQLException e) {
+            log("SQL Exception: ", e);
+        }
+
+        resp.sendRedirect("/users");
+    }
 }
 
 
