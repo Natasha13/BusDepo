@@ -30,13 +30,9 @@ public class BusParkServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String paramName = "id";
-  //      String paramValue = req.getParameter(paramName); //
-
         List<BusPark> busParks = new ArrayList<>();
 
-        String sql = "";
-            sql = "SELECT bp.id as id ,bus_id,b.bus_number bus_number," +
+        String sql = "SELECT bp.id as id ,bus_id,b.bus_number bus_number," +
                     " user_id, user_name, login, password, user_spesiality," +
                     " route_id,route_name, accepted " +
                     "FROM bus_park bp " +
@@ -82,6 +78,31 @@ public class BusParkServlet extends HttpServlet {
         RequestDispatcher rd = req.getRequestDispatcher("busPark.jsp");
         rd.forward(req, resp);
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        String p0 = req.getParameter("p0");
+        String p1 = req.getParameter("p1");
+        String p2 = req.getParameter("p2");
+
+        List<BusPark> busesPark = new ArrayList<>();
+        String sql = "INSERT INTO bus_park (bus_id,user_id,route_id, accepted) values(?,?,?,false)";
+
+        try (Connection connection = dataSource.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setString(1, req.getParameter("bus_id"));
+                statement.setString(2, req.getParameter("user_id"));
+                statement.setString(3, req.getParameter("route_id"));
+                statement.execute();
+            }
+        } catch (SQLException e) {
+            log("SQL Exception: ", e);
+        }
+
+        resp.sendRedirect("/busPark");
+    }
 }
+
 
 
