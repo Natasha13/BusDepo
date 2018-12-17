@@ -10,6 +10,11 @@
     <input type="submit" value="Execute"> <br>
 </form>
 
+<form autocomplete="off" action="routeDelete" method="post">
+    <h2> Route ID: <input type="text" name="route_id" value=" "> <br></h2>
+    <input type="submit" value="Delete"><br>
+</form></td>
+
 <table border = "1" width = "100%">
     <tr>
         <th>ID</th>
