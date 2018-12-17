@@ -4,7 +4,7 @@
 <!--suppress ALL, XmlPathReference -->
 <html>
 <head>
-    <title>My first title!!!</title>
+    <title>Title</title>
     <link rel="stylesheet" href="/css/routes.css">
 </head>
 <body>
@@ -52,9 +52,9 @@
             <li><a href="links.html">Buses</a></li>
         </ul>
     </div>
-    <div id="reclam">
-        <h2>Место для рекламы</h2>
-    </div>
+    <%--<div id="reclam">--%>
+        <%--<h2>Место для рекламы</h2>--%>
+    <%--</div>--%>
 </div>
 
 <%--<div class="widget">--%>
@@ -66,8 +66,8 @@
         <%--<li><a href="links.html">Buses</a></li>--%>
     <%--</ul>--%>
 <%--</div>--%>
-<div><p></p></div>
-<jsp:include page="bus.jsp" />
-<jsp:include page="bla2.jsp" />
+<%--<div><p></p></div>--%>
+<%--<jsp:include page="bus.jsp" />--%>
+<%--<jsp:include page="bla2.jsp" />--%>
 </body>
 </html>
