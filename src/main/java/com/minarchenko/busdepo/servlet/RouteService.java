@@ -50,4 +50,16 @@ public class RouteService implements Serializable {
         }
     }
 
+    public void routeDelete(String route_id, DataSource dataSource) {
+        String sql = "DELETE FROM routes WHERE id=?";
+
+        try (Connection connection = dataSource.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setString(1, route_id);
+                statement.execute();
+            }
+        } catch (SQLException e) {
+//            e.printStackTrace();
+        }
+    }
 }

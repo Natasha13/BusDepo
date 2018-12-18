@@ -27,6 +27,12 @@ public class BusParkDeleteServlet extends HttpServlet {
             throws ServletException, IOException {
         String busPark_id = req.getParameter("busPark_id");
 
+        busDelete(busPark_id,dataSource);
+
+        resp.sendRedirect("/busPark");
+    }
+
+    private void busDelete(String busPark_id, DataSource dataSource) {
         String sql = "DELETE FROM bus_park WHERE id=?";
 
         try (Connection connection = dataSource.getConnection()) {
@@ -37,8 +43,6 @@ public class BusParkDeleteServlet extends HttpServlet {
         } catch (SQLException e) {
             log("SQL Exception: ", e);
         }
-
-        resp.sendRedirect("/busPark");
     }
 }
 
