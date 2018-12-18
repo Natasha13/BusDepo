@@ -8,15 +8,15 @@
 </head>
 <body>
 <form autocomplete="off"  action="users" method="post" >
-    <h2> User name: <input type="text" name="user_name" value=" "><br></h2>
+    <h2> Full name: <input type="text" name="user_name" value=" "><br></h2>
     <h2> Login: <input type="text" name="login" value=" "> <br></h2>
     <h2> Password: <input type="text" name="password" value=" "> <br></h2>
-    <h2> Speciality: <input type="text" name="user_spesiality" value=" "> <br></h2>
+    <h2> Role: <input type="text" name="user_role" value=" "> <br></h2>
     <input type="submit" value="Execute"> <br>
 </form>
 
 <form autocomplete="off" action="usersDelete" method="post">
-    <h2> Bus ID: <input type="text" name="user_id" value=" "> <br></h2>
+    <h2> ID: <input type="text" name="user_id" value=" "> <br></h2>
     <input type="submit" value="Delete"><br>
 </form></td>
 
@@ -26,7 +26,7 @@
         <th>User Name</th>
         <th>Login</th>
         <th>Password</th>
-        <th>Spesiality</th>
+        <th>Role</th>
     </tr>
 
     <c:forEach var = "user1" items = "${users1}">
@@ -35,7 +35,7 @@
             <td> <c:out value = "${user1.user_name}"/></td>
             <td> <c:out value = "${user1.login}"/></td>
             <td> <c:out value = "${user1.password}"/></td>
-            <td> <c:out value = "${user1.user_spesiality}"/></td>
+            <td> <c:out value = "${user1.user_role}"/></td>
         </tr>
     </c:forEach>
 </table>

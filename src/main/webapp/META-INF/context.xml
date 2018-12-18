@@ -10,7 +10,7 @@
     <Realm className="org.apache.catalina.realm.DataSourceRealm"
            dataSourceName="BusDepo"
            userTable="users" userNameCol="login" userCredCol="password"
-           userRoleTable="users" roleNameCol="user_spesiality">
+           userRoleTable="users" roleNameCol="user_role">
         <CredentialHandler className="org.apache.catalina.realm.MessageDigestCredentialHandler"
                            algorithm="SHA-256"
                            saltLength="8"

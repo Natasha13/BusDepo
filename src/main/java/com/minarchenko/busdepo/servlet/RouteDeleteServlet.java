@@ -25,9 +25,7 @@ public class RouteDeleteServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-            String p0 = req.getParameter("p0");
 
-            List<Route> route= new ArrayList<>();
             String sql = "DELETE FROM routes WHERE id=?";
 
         try (Connection connection = dataSource.getConnection()) {

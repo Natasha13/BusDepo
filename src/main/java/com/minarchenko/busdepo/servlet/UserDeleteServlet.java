@@ -26,9 +26,7 @@ public class UserDeleteServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        String p0 = req.getParameter("p0");
 
-        List<User> user = new ArrayList<>();
         String sql = "DELETE FROM users WHERE id=?";
 
         try (Connection connection = dataSource.getConnection()) {

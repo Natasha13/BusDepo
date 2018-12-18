@@ -63,9 +63,7 @@ public class BusServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        String p1 = req.getParameter("p1");
 
-        List<Bus> bus=new ArrayList<>();
         String sql="INSERT INTO buses (bus_number) values(?)";
             try(Connection connection=dataSource.getConnection()) {
                 try(PreparedStatement statement = connection.prepareStatement(sql)) {

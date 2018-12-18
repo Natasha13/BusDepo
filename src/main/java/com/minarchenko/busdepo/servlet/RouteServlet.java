@@ -64,9 +64,7 @@ import java.util.List;
         @Override
         protected void doPost(HttpServletRequest request,HttpServletResponse resp)
             throws IOException{
-            String p1=request.getParameter("p1");
 
-            List<Route> route=new ArrayList<>();
             String sql="INSERT INTO routes (route_name) values(?)";
 
                 try(Connection connection= dataSource.getConnection()){

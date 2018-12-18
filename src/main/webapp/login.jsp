@@ -3,7 +3,7 @@
     <title>Login Error</title>
 </head>
 <body>
-<form method="POST" action="j_security_check">
+<form autocomplete="off" method="POST" action="j_security_check">
     <table>
         <tr>
             <td colspan="2">Login to the BusDepo application:</td>

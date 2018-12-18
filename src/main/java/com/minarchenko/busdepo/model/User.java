@@ -5,14 +5,14 @@ public class User {
     private String user_name;
     private String login;
     private String password;
-    private String user_spesiality;
+    private String user_role;
 
-    public User(int id, String user_name, String login, String password, String user_spesiality) {
+    public User(int id, String user_name, String login, String password, String user_role) {
         this.id = id;
         this.user_name = user_name;
         this.login = login;
         this.password = password;
-        this.user_spesiality = user_spesiality;
+        this.user_role = user_role;
     }
 
     @Override
@@ -22,7 +22,7 @@ public class User {
                 ", user_name='" + user_name + '\'' +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
-                ", user_spesiality='" + user_spesiality + '\'' +
+                ", user_role='" + user_role + '\'' +
                 '}';
     }
 
@@ -58,11 +58,11 @@ public class User {
         this.password = password;
     }
 
-    public String getUser_spesiality() {
-        return user_spesiality;
+    public String getUser_role() {
+        return user_role;
     }
 
-    public void setUser_spesiality(String user_spesiality) {
-        this.user_spesiality = user_spesiality;
+    public void setUser_role(String user_role) {
+        this.user_role = user_role;
     }
 }

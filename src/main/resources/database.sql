@@ -12,16 +12,18 @@ SELECT * FROM buses;
 SELECT * FROM users;
 SELECT * FROM routes;
 
+DROP TABLE users;
+
 CREATE TABLE users(
   id INT NOT NULL AUTO_INCREMENT,
   user_name VARCHAR(45) NOT NULL ,
   login VARCHAR(50) NOT NULL ,
-  password varchar(50) not NULL,
-  user_spesiality VARCHAR(25) NOT NULL ,
+  password varchar(500) not NULL,
+  user_role VARCHAR(25) NOT NULL ,
   PRIMARY KEY (id)
 );
 
-INSERT INTO users (user_name, login, password, user_spesiality) VALUES
+INSERT INTO users (user_name, login, password, user_role) VALUES
   ('Viktor Kravec','viktorkravec','8638986871','driver'),
   ('Oleg Vinograd','olegvinograd','0867531981','driver');
 #   ('Artem Lavrov','artemlavrov','2638893876','driver'),
@@ -33,6 +35,8 @@ INSERT INTO users (user_name, login, password, user_spesiality) VALUES
 
 SELECT * FROM users;
 
+UPDATE users set login="sergiypanchenko";
+
 CREATE TABLE routes(
   id INT NOT NULL AUTO_INCREMENT,
   route_name varchar(20) not NULL,
@@ -43,6 +47,8 @@ INSERT INTO routes (route_name) VALUES ('220'),('215K'),
   ('582D');
 
 SELECT * FROM routes;
+
+DROP TABLE bus_park;
 
 CREATE TABLE bus_park(
   id INT NOT NULL AUTO_INCREMENT,
@@ -69,12 +75,12 @@ SELECT * FROM buses;
 SELECT * FROM users;
 SELECT * FROM routes;
 
-SELECT bp.id as id ,bus_id,b.bus_number bus_number, user_id, user_name, login, password, user_spesiality,
+SELECT bp.id as id ,bus_id,b.bus_number bus_number, user_id, user_name, login, password, user_role,
   route_id,route_name, accepted FROM bus_park bp
   LEFT JOIN buses b ON bp.bus_id = b.id
   LEFT JOIN users ON bp.user_id = users.Id LEFT JOIN routes ON bp.route_id = routes.Id;
 
-SELECT b.id as bus_id,b.bus_number bus_number, users.id as user_id, users.user_name, users.login, users.password , users.user_spesiality,
+SELECT b.id as bus_id,b.bus_number bus_number, users.id as user_id, users.user_name, users.login, users.password , users.user_role,
     routes.id as route_id,routes.route_name
                     FROM buses b ,users ,routes
 WHERE b.id=4 AND users.id=5 AND routes.id=3;

@@ -82,11 +82,6 @@ public class BusParkServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        String p0 = req.getParameter("p0");
-        String p1 = req.getParameter("p1");
-        String p2 = req.getParameter("p2");
-
-        List<BusPark> busesPark = new ArrayList<>();
         String sql = "INSERT INTO bus_park (bus_id,user_id,route_id, accepted) values(?,?,?,false)";
 
         try (Connection connection = dataSource.getConnection()) {

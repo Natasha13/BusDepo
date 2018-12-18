@@ -25,9 +25,7 @@ public class BusParkDeleteServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        String p0 = req.getParameter("p0");
 
-        List<BusPark> busesPark = new ArrayList<>();
         String sql = "DELETE FROM bus_park WHERE id=?";
 
         try (Connection connection = dataSource.getConnection()) {
