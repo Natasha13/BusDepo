@@ -25,16 +25,14 @@
         <th>ID</th>
         <th>User Name</th>
         <th>Login</th>
-        <th>Password</th>
         <th>Role</th>
     </tr>
 
-    <c:forEach var = "user1" items = "${users1}">
+    <c:forEach var = "user1" items = "${users}">
         <tr>
             <td> <c:out value = "${user1.id}"/></td>
             <td> <c:out value = "${user1.user_name}"/></td>
             <td> <c:out value = "${user1.login}"/></td>
-            <td> <c:out value = "${user1.password}"/></td>
             <td> <c:out value = "${user1.user_role}"/></td>
         </tr>
     </c:forEach>

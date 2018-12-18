@@ -59,7 +59,7 @@ public class UserServlet extends HttpServlet {
             log("SQL Exception: ", e);
         }
 
-        req.setAttribute("users1", users);
+        req.setAttribute("users", users);
         RequestDispatcher rd = req.getRequestDispatcher("user.jsp");
         rd.forward(req, resp);
     }
