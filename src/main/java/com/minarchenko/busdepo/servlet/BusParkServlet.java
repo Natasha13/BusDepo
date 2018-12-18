@@ -33,7 +33,7 @@ public class BusParkServlet extends HttpServlet {
         List<BusPark> busParks = new ArrayList<>();
 
         String sql = "SELECT bp.id as id ,bus_id,b.bus_number bus_number," +
-                    " user_id, user_name, login, password, user_spesiality," +
+                    " user_id, user_name, login, password, user_role," +
                     " route_id,route_name, accepted " +
                     "FROM bus_park bp " +
                     "LEFT JOIN buses b ON bp.bus_id = b.id " +
@@ -53,7 +53,7 @@ public class BusParkServlet extends HttpServlet {
                                 resultSet.getString("user_name"),
                                 resultSet.getString("login"),
                                 resultSet.getString("password"),
-                                resultSet.getString("user_spesiality")
+                                resultSet.getString("user_role")
                         );
                         Route route=new Route(
                                 resultSet.getInt("route_id"),

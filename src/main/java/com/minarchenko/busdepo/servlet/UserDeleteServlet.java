@@ -19,6 +19,7 @@ import java.util.List;
 
 @WebServlet(name = "UserDeleteServlet", urlPatterns = {"/usersDelete"})
 public class UserDeleteServlet extends HttpServlet {
+    private UserService userService=new UserService();
 
     @Resource(name = "BusDepo")
     private DataSource dataSource;
@@ -26,18 +27,12 @@ public class UserDeleteServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+        String user_id = req.getParameter("user_id");
 
-        String sql = "DELETE FROM users WHERE id=?";
-
-        try (Connection connection = dataSource.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                statement.setString(1, req.getParameter("user_id"));
-                statement.execute();
-            }
-        } catch (SQLException e) {
-            log("SQL Exception: ", e);
-        }
+        userService.userDelete(user_id,dataSource);
 
         resp.sendRedirect("/users");
     }
+
+
 }

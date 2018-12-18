@@ -20,44 +20,17 @@ import java.util.List;
 
 @WebServlet(name = "UserServlet", urlPatterns = {"/users"})
 public class UserServlet extends HttpServlet {
+
+    private final UserService userService=new UserService();
+
     @Resource(name = "BusDepo")
     private DataSource dataSource;
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws
+            ServletException, IOException {
 
-        String paramName = "id";
-        String paramValue = req.getParameter(paramName); //
-
-        List<User> users = new ArrayList<>();
-
-        String sql = "";
-        if (paramValue != null) {
-            sql = "SELECT id,user_name, login, password, user_role FROM users WHERE id=?";
-        } else {
-            sql = "SELECT id,user_name, login, password, user_role FROM users";
-        }
-        try (Connection connection = dataSource.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                if (paramValue != null) {
-                    statement.setString(1, paramValue);
-                }
-                try (ResultSet resultSet = statement.executeQuery()) {
-                    while (resultSet.next()) {
-                        User user = new User(
-                                resultSet.getInt("id"),
-                                resultSet.getString("user_name"),
-                                resultSet.getString("login"),
-                                resultSet.getString("password"),
-                                resultSet.getString("user_role")
-                                );
-                        users.add(user);
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            log("SQL Exception: ", e);
-        }
+        List<User> users = userService.getUsers(dataSource);
 
         req.setAttribute("users", users);
         RequestDispatcher rd = req.getRequestDispatcher("user.jsp");
@@ -68,22 +41,17 @@ public class UserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        String sql = "INSERT INTO users (user_name, login, password, user_role ) values(?,?,?,?)";
+        String user_name = req.getParameter("user_name");
+        String login = req.getParameter("login");
+        String password = req.getParameter("password");
+        String user_role = req.getParameter("user_role");
 
-        try (Connection connection = dataSource.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                statement.setString(1, req.getParameter("user_name"));
-                statement.setString(2, req.getParameter("login"));
-                statement.setString(3, req.getParameter("password"));
-                statement.setString(4, req.getParameter("user_role"));
-                statement.execute();
-            }
-        } catch (SQLException e) {
-            log("SQL Exception: ", e);
-        }
+      userService.addUser(user_name, login, password, user_role,dataSource);
 
         resp.sendRedirect("/users");
     }
+
+
 }
 
 
