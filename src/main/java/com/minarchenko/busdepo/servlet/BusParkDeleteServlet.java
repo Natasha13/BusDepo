@@ -25,12 +25,13 @@ public class BusParkDeleteServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+        String busPark_id = req.getParameter("busPark_id");
 
         String sql = "DELETE FROM bus_park WHERE id=?";
 
         try (Connection connection = dataSource.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                statement.setString(1, req.getParameter("busPark_id"));
+                statement.setString(1, busPark_id);
                 statement.execute();
             }
         } catch (SQLException e) {
