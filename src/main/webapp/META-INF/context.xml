@@ -2,9 +2,19 @@
 <Context>
     <Resource
             name="BusDepo" type="javax.sql.DataSource"
-            maxActive="100" maxIdle="30" maxWait="10000"
-            url="jdbc:mysql://localhost:3306/BusDepo?serverTimezone=UTC"
+            url="jdbc:mysql://${dbHost}/BusDepo?serverTimezone=UTC"
             driverClassName="com.mysql.jdbc.Driver"
-            username="root" password="root"
+            username="${dbUserName}" password="${dbUserPassword}"
     />
+
+    <Realm className="org.apache.catalina.realm.DataSourceRealm"
+           dataSourceName="BusDepo"
+           userTable="users" userNameCol="login" userCredCol="password"
+           userRoleTable="users" roleNameCol="user_spesiality">
+        <CredentialHandler className="org.apache.catalina.realm.MessageDigestCredentialHandler"
+                           algorithm="SHA-256"
+                           saltLength="8"
+        />
+    </Realm>
+
 </Context>
