@@ -1,6 +1,7 @@
 package com.minarchenko.busdepo.servlet;
 
 import com.minarchenko.busdepo.model.User;
+import com.minarchenko.busdepo.service.UserService;
 
 import javax.annotation.Resource;
 import javax.servlet.RequestDispatcher;
@@ -41,7 +42,7 @@ public class UserServlet extends HttpServlet {
         String password = req.getParameter("password");
         String user_role = req.getParameter("user_role");
 
-      userService.addUser(user_name, login, password, user_role,dataSource);
+        userService.addUser(user_name, login, password, user_role,dataSource);
 
         resp.sendRedirect("/users");
     }

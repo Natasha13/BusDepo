@@ -1,4 +1,4 @@
-package com.minarchenko.busdepo.servlet;
+package com.minarchenko.busdepo.service;
 
 import com.minarchenko.busdepo.model.Bus;
 import com.minarchenko.busdepo.model.BusPark;

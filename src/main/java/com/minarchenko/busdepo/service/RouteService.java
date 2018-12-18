@@ -1,4 +1,4 @@
-package com.minarchenko.busdepo.servlet;
+package com.minarchenko.busdepo.service;
 
 import com.minarchenko.busdepo.model.Route;
 
@@ -15,7 +15,7 @@ public class RouteService implements Serializable {
     public RouteService() {
     }
 
-    List<Route> getRoutes(DataSource dataSource) {
+    public List<Route> getRoutes(DataSource dataSource) {
         List<Route> routes = new ArrayList<Route>();
 
         String sql = "SELECT id,route_name FROM routes";
@@ -37,7 +37,7 @@ public class RouteService implements Serializable {
         return routes;
     }
 
-    void addRoute(String route_name, DataSource dataSource) {
+    public void addRoute(String route_name, DataSource dataSource) {
         String sql = "INSERT INTO routes (route_name) VALUES(?)";
 
         try (Connection connection = dataSource.getConnection()) {

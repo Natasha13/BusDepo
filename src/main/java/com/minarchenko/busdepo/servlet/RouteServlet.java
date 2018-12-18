@@ -1,6 +1,7 @@
 package com.minarchenko.busdepo.servlet;
 
 import com.minarchenko.busdepo.model.Route;
+import com.minarchenko.busdepo.service.RouteService;
 
 import javax.annotation.Resource;
 import javax.servlet.RequestDispatcher;
@@ -37,7 +38,7 @@ public class RouteServlet extends HttpServlet {
         String route_name = request.getParameter("route_name");
 
         routeService.addRoute(route_name, dataSource);
-        
+
         resp.sendRedirect("/routes");
     }
 

@@ -1,5 +1,7 @@
 package com.minarchenko.busdepo.servlet;
 
+import com.minarchenko.busdepo.service.BusService;
+
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
