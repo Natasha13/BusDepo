@@ -6,7 +6,7 @@
 <form method="POST" action="j_security_check">
     <table>
         <tr>
-            <td colspan="2">Login to the Tomcat-Demo application:</td>
+            <td colspan="2">Login to the BusDepo application:</td>
         </tr>
         <tr>
             <td>Name:</td>
