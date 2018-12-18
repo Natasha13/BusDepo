@@ -1,7 +1,5 @@
 package com.minarchenko.busdepo.servlet;
 
-import com.minarchenko.busdepo.model.User;
-
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,11 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @WebServlet(name = "UserDeleteServlet", urlPatterns = {"/usersDelete"})
