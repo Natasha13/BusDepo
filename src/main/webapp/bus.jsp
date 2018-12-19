@@ -3,12 +3,12 @@
 <html>
 <body>
 <form autocomplete="off"  action="buses" method="post" >
-  <h2> Bus name: <input type="text" name="bus_number" value=" "><br></h2>
+  <h2> Bus name: <input type="text" name="bus_number" value=""><br></h2>
   <input type="submit" value="Execute"> <br>
 </form>
 
 <form autocomplete="off" action="busDelete" method="post">
-  <h2> Bus ID: <input type="text" name="bus_id" value=" "> <br></h2>
+  <h2> Bus ID: <input type="text" name="bus_id" value=""> <br></h2>
   <input type="submit" value="Delete"><br>
 </form>
 

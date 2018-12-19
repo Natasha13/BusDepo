@@ -7,13 +7,13 @@
 <body>
 <c:if test="${pageContext.request.isUserInRole('admin')}">
     <form autocomplete="off" action="busPark" method="post">
-        <h2> Bus ID: <input type="text" name="bus_id" value=" "> <br></h2>
-        <h2> User ID: <input type="text" name="user_id" value=" "><br></h2>
-        <h2> Route ID: <input type="text" name="route_id" value=" "> <br></h2>
+        <h2> Bus ID: <input type="text" name="bus_id" value=""> <br></h2>
+        <h2> User ID: <input type="text" name="user_id" value=""><br></h2>
+        <h2> Route ID: <input type="text" name="route_id" value=""> <br></h2>
         <input type="submit" value="Execute"> <br>
     </form>
     <form autocomplete="off" action="busParkDelete" method="post">
-        <h2> Bus ID: <input type="text" name="busPark_id" value=" "> <br></h2>
+        <h2> Bus ID: <input type="text" name="busPark_id" value=""> <br></h2>
         <input type="submit" value="Delete"><br>
     </form>
 </c:if>

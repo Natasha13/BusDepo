@@ -8,15 +8,15 @@
 </head>
 <body>
 <form autocomplete="off"  action="users" method="post" >
-    <h2> Full name: <input type="text" name="user_name" value=" "><br></h2>
-    <h2> Login: <input type="text" name="login" value=" "> <br></h2>
-    <h2> Password: <input type="text" name="password" value=" "> <br></h2>
-    <h2> Role: <input type="text" name="user_role" value=" "> <br></h2>
+    <h2> Full name: <input type="text" name="user_name" value=""><br></h2>
+    <h2> Login: <input type="text" name="login" value=""> <br></h2>
+    <h2> Password: <input type="text" name="password" value=""> <br></h2>
+    <h2> Role: <input type="text" name="user_role" value=""> <br></h2>
     <input type="submit" value="Execute"> <br>
 </form>
 
 <form autocomplete="off" action="usersDelete" method="post">
-    <h2> ID: <input type="text" name="user_id" value=" "> <br></h2>
+    <h2> ID: <input type="text" name="user_id" value=""> <br></h2>
     <input type="submit" value="Delete"><br>
 </form></td>
 

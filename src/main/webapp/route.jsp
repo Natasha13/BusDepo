@@ -6,12 +6,12 @@
 </head>
 <body>
 <form autocomplete="off"  action="routes" method="post" >
-    <h2> Route name: <input type="text" name="route_name" value=" "><br></h2>
+    <h2> Route name: <input type="text" name="route_name" value=""><br></h2>
     <input type="submit" value="Execute"> <br>
 </form>
 
 <form autocomplete="off" action="routeDelete" method="post">
-    <h2> Route ID: <input type="text" name="route_id" value=" "> <br></h2>
+    <h2> Route ID: <input type="text" name="route_id" value=""> <br></h2>
     <input type="submit" value="Delete"><br>
 </form>
 
