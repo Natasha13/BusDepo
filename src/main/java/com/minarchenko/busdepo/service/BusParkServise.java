@@ -139,4 +139,17 @@ public class BusParkServise implements Serializable {
             //  log("SQL Exception: ", e);
         }
     }
+
+    public void busParkAccept(String busPark_id, DataSource dataSource) {
+        String sql = "UPDATE bus_park SET accepted=NOT accepted WHERE id=?";
+
+        try (Connection connection = dataSource.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setString(1, busPark_id);
+                statement.execute();
+            }
+        } catch (SQLException e) {
+            //  log("SQL Exception: ", e);
+        }
+    }
 }

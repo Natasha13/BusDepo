@@ -42,8 +42,8 @@ INSERT INTO buses (bus_number) VALUES ('AA 1843 AA'),('AA 1649 AA'),('AA 0726 AA
   ('AA 1907 AA'),('AA 1531 AA'),('AA 1281 AA');
 
 INSERT INTO users (user_name, login, password, user_role) VALUES
-#   ('Admin','admin','2e7bf030bcd9a5e2e949bf4ffa1b80b9237e210624df1c392a9fce8117b1c797$1$ee647b13e223a43d21e850ceafca4330110a9af13b81426fe91ea4d1da8a3dc9b96407a0f2221189badfd219ab6c05bbb5d8dda1c4ff9470859cf1bb5814bb3a','admin'),
-#  ('Viktor Kravec','viktorkravec','c43f20f94a8a000008936d414293b785931ff277b06968972ddbf152161e9d70$1$90e662692bd2dd95c2cb159c4f539af5107aab06a9f99a17d2441930472a6356','driver'),
+   ('Admin','admin','2e7bf030bcd9a5e2e949bf4ffa1b80b9237e210624df1c392a9fce8117b1c797$1$ee647b13e223a43d21e850ceafca4330110a9af13b81426fe91ea4d1da8a3dc9b96407a0f2221189badfd219ab6c05bbb5d8dda1c4ff9470859cf1bb5814bb3a','admin'),
+  ('Viktor Kravec','viktorkravec','c43f20f94a8a000008936d414293b785931ff277b06968972ddbf152161e9d70$1$90e662692bd2dd95c2cb159c4f539af5107aab06a9f99a17d2441930472a6356','driver'),
   ('Oleg Vinograd','olegvinograd','87db8d518310a9cdf67be66c625a543ddd3f061d191fe2400a1ed1eab73af2b4$1$8723b1d31612a19849c5f810bbe7fb7c170221912b2afc61d54273d36b7f6764','driver'),
   ('Artem Lavrov','artemlavrov','6907f29635c9df99bac8dd8485a37b44ff6e701b8e24a3a41a74335ae99ac2fe$1$ddfaa78fe5f9a1a41894dd2e68f1d8a94511b623bf694bb993ca45bb92b31ef6','driver'),
   ('Petro Svalyavchik','petrosvalyavchik','cdb2ec5329c95b0fd01af1ce64276ee5d29442c6954c2dccbe557bb302543212$1$53d5d2e899028668b480062d3dc4b12d31044dcc29b3c54ae04dcafbeb2f7330','driver'),
@@ -69,3 +69,4 @@ SELECT * FROM buses;
 SELECT * FROM users;
 SELECT * FROM routes;
 
+UPDATE bus_park set accepted=NOT accepted WHERE id=1

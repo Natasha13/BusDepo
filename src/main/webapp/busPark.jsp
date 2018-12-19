@@ -30,6 +30,7 @@
         <th>User ID</th>
         <th>User Name</th>
         <th>Accepted</th>
+        <th>Accept</th>
     </tr>
 
     <c:forEach var = "busPark" items = "${busParks}">
@@ -42,6 +43,12 @@
             <td> <c:out value = "${busPark.user.id}"/></td>
             <td> <c:out value = "${busPark.user.user_name}"/></td>
             <td> <c:out value = "${busPark.accepted}"/></td>
+            <td>
+                <form action="busParkAccept" method="post">
+                    <input type="hidden" name="busPark_id" value="${busPark.id}">
+                    <input type="submit" value="Accept"><br>
+                </form>
+            </td>
         </tr>
     </c:forEach>
 </table>
