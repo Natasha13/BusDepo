@@ -23,24 +23,24 @@
 <table border = "1" width = "100%">
     <tr>
         <th>ID</th>
+        <th>Route ID</th>
+        <th>Route Name</th>
         <th>Bus ID</th>
         <th>BusNumber</th>
         <th>User ID</th>
         <th>User Name</th>
-        <th>Route ID</th>
-        <th>Route Name</th>
         <th>Accepted</th>
     </tr>
 
     <c:forEach var = "busPark" items = "${busParks}">
         <tr>
             <td> <c:out value = "${busPark.id}"/></td>
+            <td> <c:out value = "${busPark.route.id}"/></td>
+            <td> <c:out value = "${busPark.route.routeName}"/></td>
             <td> <c:out value = "${busPark.bus.id}"/></td>
             <td> <c:out value = "${busPark.bus.busNumber}"/></td>
             <td> <c:out value = "${busPark.user.id}"/></td>
             <td> <c:out value = "${busPark.user.user_name}"/></td>
-            <td> <c:out value = "${busPark.route.id}"/></td>
-            <td> <c:out value = "${busPark.route.routeName}"/></td>
             <td> <c:out value = "${busPark.accepted}"/></td>
         </tr>
     </c:forEach>
