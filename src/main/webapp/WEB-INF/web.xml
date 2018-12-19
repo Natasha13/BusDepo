@@ -34,6 +34,16 @@
         </auth-constraint>
     </security-constraint>
 
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>BusDepo Driver Accept</web-resource-name>
+            <url-pattern>/busParkAccept</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>driver</role-name>
+        </auth-constraint>
+    </security-constraint>
+
     <login-config>
         <auth-method>FORM</auth-method>
         <form-login-config>
