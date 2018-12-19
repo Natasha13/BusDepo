@@ -6,16 +6,20 @@
     <title>Bus Park</title>
 </head>
 <body>
-<form autocomplete="off" action="busPark" method="post" >
-    <h2> Bus ID: <input type="text" name="bus_id" value=" "> <br></h2>
-    <h2> User ID: <input type="text" name="user_id" value=" "><br></h2>
-    <h2> Route ID: <input type="text" name="route_id" value=" "> <br></h2>
-    <input type="submit" value="Execute"> <br>
-</form>
-<form autocomplete="off" action="busParkDelete" method="post">
-    <h2> Bus ID: <input type="text" name="busPark_id" value=" "> <br></h2>
-    <input type="submit" value="Delete"><br>
-</form></td>
+<c:if test="${pageContext.request.isUserInRole('admin')}">
+    <form autocomplete="off" action="busPark" method="post" >
+        <h2> Bus ID: <input type="text" name="bus_id" value=" "> <br></h2>
+        <h2> User ID: <input type="text" name="user_id" value=" "><br></h2>
+        <h2> Route ID: <input type="text" name="route_id" value=" "> <br></h2>
+        <input type="submit" value="Execute"> <br>
+    </form>
+    <form autocomplete="off" action="busParkDelete" method="post">
+        <h2> Bus ID: <input type="text" name="busPark_id" value=" "> <br></h2>
+        <input type="submit" value="Delete"><br>
+    </form>
+</c:if>
+
+
 <table border = "1" width = "100%">
     <tr>
         <th>ID</th>
@@ -28,16 +32,16 @@
         <th>Accepted</th>
     </tr>
 
-    <c:forEach var = "busPark1" items = "${busParks1}">
+    <c:forEach var = "busPark" items = "${busParks}">
         <tr>
-            <td> <c:out value = "${busPark1.id}"/></td>
-            <td> <c:out value = "${busPark1.bus.id}"/></td>
-            <td> <c:out value = "${busPark1.bus.busNumber}"/></td>
-            <td> <c:out value = "${busPark1.user.id}"/></td>
-            <td> <c:out value = "${busPark1.user.user_name}"/></td>
-            <td> <c:out value = "${busPark1.route.id}"/></td>
-            <td> <c:out value = "${busPark1.route.routeName}"/></td>
-            <td> <c:out value = "${busPark1.accepted}"/></td>
+            <td> <c:out value = "${busPark.id}"/></td>
+            <td> <c:out value = "${busPark.bus.id}"/></td>
+            <td> <c:out value = "${busPark.bus.busNumber}"/></td>
+            <td> <c:out value = "${busPark.user.id}"/></td>
+            <td> <c:out value = "${busPark.user.user_name}"/></td>
+            <td> <c:out value = "${busPark.route.id}"/></td>
+            <td> <c:out value = "${busPark.route.routeName}"/></td>
+            <td> <c:out value = "${busPark.accepted}"/></td>
         </tr>
     </c:forEach>
 </table>

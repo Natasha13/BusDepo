@@ -28,12 +28,12 @@
         <th>Role</th>
     </tr>
 
-    <c:forEach var = "user1" items = "${users}">
+    <c:forEach var = "user" items = "${users}">
         <tr>
-            <td> <c:out value = "${user1.id}"/></td>
-            <td> <c:out value = "${user1.user_name}"/></td>
-            <td> <c:out value = "${user1.login}"/></td>
-            <td> <c:out value = "${user1.user_role}"/></td>
+            <td> <c:out value = "${user.id}"/></td>
+            <td> <c:out value = "${user.user_name}"/></td>
+            <td> <c:out value = "${user.login}"/></td>
+            <td> <c:out value = "${user.user_role}"/></td>
         </tr>
     </c:forEach>
 </table>

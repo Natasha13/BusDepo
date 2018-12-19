@@ -12,12 +12,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 
 @WebServlet(name = "BusParkServlet", urlPatterns = {"/busPark"})
 public class BusParkServlet extends HttpServlet {
 
-    private BusParkServise busParkServise=new BusParkServise();
+    private BusParkServise busParkServise = new BusParkServise();
 
     @Resource(name = "BusDepo")
     private DataSource dataSource;
@@ -25,9 +26,16 @@ public class BusParkServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        List<BusPark> busParks =busParkServise.getBusParks(dataSource);
+        Principal userPrincipal = req.getUserPrincipal();
+        List<BusPark> busParks;
 
-        req.setAttribute("busParks1", busParks);
+        if (req.isUserInRole("driver")) {
+            busParks = busParkServise.getBusParksForUser(dataSource, userPrincipal.getName());
+        } else {
+            busParks = busParkServise.getBusParks(dataSource);
+        }
+
+        req.setAttribute("busParks", busParks);
         RequestDispatcher rd = req.getRequestDispatcher("busPark.jsp");
         rd.forward(req, resp);
     }
@@ -40,7 +48,7 @@ public class BusParkServlet extends HttpServlet {
         String user_id = req.getParameter("user_id");
         String route_id = req.getParameter("route_id");
 
-        busParkServise.addBusPark(bus_id, user_id, route_id,dataSource);
+        busParkServise.addBusPark(bus_id, user_id, route_id, dataSource);
 
         resp.sendRedirect("/busPark");
     }

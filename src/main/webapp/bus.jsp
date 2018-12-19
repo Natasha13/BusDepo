@@ -10,7 +10,7 @@
 <form autocomplete="off" action="busDelete" method="post">
   <h2> Bus ID: <input type="text" name="bus_id" value=" "> <br></h2>
   <input type="submit" value="Delete"><br>
-</form></td>
+</form>
 
 <table border = "1" width = "100%">
   <tr>

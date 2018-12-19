@@ -13,7 +13,7 @@
 <form autocomplete="off" action="routeDelete" method="post">
     <h2> Route ID: <input type="text" name="route_id" value=" "> <br></h2>
     <input type="submit" value="Delete"><br>
-</form></td>
+</form>
 
 <table border = "1" width = "100%">
     <tr>
@@ -21,10 +21,10 @@
         <th>Route Name</th>
     </tr>
 
-    <c:forEach var = "route1" items = "${routes1}">
+    <c:forEach var = "route" items = "${routes}">
         <tr>
-            <td> <c:out value = "${route1.id}"/></td>
-            <td> <c:out value = "${route1.routeName}"/></td>
+            <td> <c:out value = "${route.id}"/></td>
+            <td> <c:out value = "${route.routeName}"/></td>
         </tr>
     </c:forEach>
 </table>

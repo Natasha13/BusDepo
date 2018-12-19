@@ -27,7 +27,7 @@ public class RouteServlet extends HttpServlet {
 
         List<Route> routes = routeService.getRoutes(dataSource);
 
-        req.setAttribute("routes1", routes);
+        req.setAttribute("routes", routes);
         RequestDispatcher rd = req.getRequestDispatcher("route.jsp");
         rd.forward(req, resp);
     }

@@ -1,8 +1,10 @@
 package com.minarchenko.busdepo.service;
 
 import com.minarchenko.busdepo.model.User;
+import org.apache.catalina.realm.MessageDigestCredentialHandler;
 
 import javax.sql.DataSource;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -39,13 +41,22 @@ public class UserService {
 
 
     public void addUser(String user_name, String login, String password, String user_role, DataSource dataSource) {
+        MessageDigestCredentialHandler passwordHandler = new MessageDigestCredentialHandler();
+        try {
+            passwordHandler.setAlgorithm("SHA-256");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        String passwordHash = passwordHandler.mutate(password);
+
         String sql = "INSERT INTO users (user_name, login, password, user_role ) values(?,?,?,?)";
 
         try (Connection connection =dataSource.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setString(1, user_name);
                 statement.setString(2, login);
-                statement.setString(3, password);
+                statement.setString(3, passwordHash);
                 statement.setString(4, user_role);
                 statement.execute();
             }
@@ -64,5 +75,17 @@ public class UserService {
         } catch (SQLException e) {
 //            log("SQL Exception: ", e);
         }
+    }
+
+    public static void main(String[] args) {
+        MessageDigestCredentialHandler passwordHandler = new MessageDigestCredentialHandler();
+        try {
+            passwordHandler.setAlgorithm("SHA-256");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        String passwordHash = passwordHandler.mutate("annagashyk");
+        System.out.println(passwordHash);
     }
 }

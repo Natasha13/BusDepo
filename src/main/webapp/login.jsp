@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Login Error</title>
+    <title>Login</title>
 </head>
 <body>
 <form autocomplete="off" method="POST" action="j_security_check">
@@ -9,8 +9,8 @@
             <td colspan="2">Login to the BusDepo application:</td>
         </tr>
         <tr>
-            <td>Name:</td>
-            <td><input type="text" name="j_username" /></td>
+            <td>Login: </td>
+            <td><input type="text" name= "j_username" /></td>
         </tr>
         <tr>
             <td>Password:</td>
