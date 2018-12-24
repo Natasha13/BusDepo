@@ -27,14 +27,27 @@ public class BusParkServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         Principal userPrincipal = req.getUserPrincipal();
+        String pageString = req.getParameter("page");
+        if (pageString == null) {
+            pageString = "1";
+        }
+        Integer page = Integer.valueOf(pageString);
+        int pagesCount=0;
+
         List<BusPark> busParks;
 
         if (req.isUserInRole("driver")) {
             busParks = busParkServise.getBusParksForUser(dataSource, userPrincipal.getName());
+            pagesCount=1;
         } else {
-            busParks = busParkServise.getBusParks(dataSource);
+            busParks = busParkServise.getBusParks(dataSource, page);
+            pagesCount=busParkServise.countBusParkPages(dataSource);
         }
 
+
+
+        req.setAttribute("page", page);
+        req.setAttribute("pagesCount",pagesCount);
         req.setAttribute("busParks", busParks);
         RequestDispatcher rd = req.getRequestDispatcher("busPark.jsp");
         rd.forward(req, resp);

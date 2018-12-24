@@ -2,6 +2,10 @@ package com.minarchenko.busdepo.service;
 
 import com.minarchenko.busdepo.model.User;
 import org.apache.catalina.realm.MessageDigestCredentialHandler;
+import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.ResultSetHandler;
+import org.apache.commons.dbutils.handlers.BeanHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import javax.sql.DataSource;
 import java.security.NoSuchAlgorithmException;
@@ -13,13 +17,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserService {
-    public List<User> getUsers(DataSource dataSource) {
-        List<User> users = new ArrayList<>();
 
-        String sql = "SELECT id,user_name, login, password, user_role FROM users";
+    private static final int PAGE_SIZE = 2;
+
+    public List<User> getUsers(DataSource dataSource, Integer page) {
+        List<User> users = new ArrayList<>();
+        Integer offset=(page-1)*PAGE_SIZE;
+
+        String sql = "SELECT id,user_name, login, password, user_role FROM users LIMIT ? OFFSET ?";
 
         try (Connection connection =dataSource.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setInt(1,PAGE_SIZE);
+                statement.setInt(2,offset);
                 try (ResultSet resultSet = statement.executeQuery()) {
                     while (resultSet.next()) {
                         User user = new User(
@@ -52,40 +62,37 @@ public class UserService {
 
         String sql = "INSERT INTO users (user_name, login, password, user_role ) values(?,?,?,?)";
 
-        try (Connection connection =dataSource.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                statement.setString(1, user_name);
-                statement.setString(2, login);
-                statement.setString(3, passwordHash);
-                statement.setString(4, user_role);
-                statement.execute();
-            }
+        QueryRunner runner = new QueryRunner(dataSource);
+        try {
+            runner.execute(sql, user_name,login,passwordHash,user_role);
         } catch (SQLException e) {
-//            log("SQL Exception: ", e);
+            e.printStackTrace();
         }
     }
+
     public void userDelete(String user_id, DataSource dataSource) {
         String sql = "DELETE FROM users WHERE id=?";
 
-        try (Connection connection = dataSource.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                statement.setString(1, user_id);
-                statement.execute();
-            }
+        QueryRunner runner = new QueryRunner(dataSource);
+        try {
+            runner.execute(sql, user_id);
         } catch (SQLException e) {
-//            log("SQL Exception: ", e);
+            e.printStackTrace();
         }
     }
 
-    public static void main(String[] args) {
-        MessageDigestCredentialHandler passwordHandler = new MessageDigestCredentialHandler();
+    public int countUsersPages( DataSource dataSource) {
+        String sql = "SELECT count(*) from users ";
+        QueryRunner runner = new QueryRunner(dataSource);
+        ResultSetHandler<Integer> handler = resultSet -> {
+            resultSet.next();
+            return (int)Math.ceil(resultSet.getDouble(1) /PAGE_SIZE);
+        };
         try {
-            passwordHandler.setAlgorithm("SHA-256");
-        } catch (NoSuchAlgorithmException e) {
+            return runner.execute(sql, handler).get(0);
+        } catch (SQLException e) {
             e.printStackTrace();
+            return 0;
         }
-
-        String passwordHash = passwordHandler.mutate("annagashyk");
-        System.out.println(passwordHash);
     }
 }

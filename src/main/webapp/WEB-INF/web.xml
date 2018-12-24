@@ -27,6 +27,7 @@
             <url-pattern>/index.jsp</url-pattern>
             <url-pattern>/logout.jsp</url-pattern>
             <url-pattern>/busPark</url-pattern>
+            <url-pattern>/css/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <role-name>driver</role-name>
@@ -52,4 +53,24 @@
         </form-login-config>
     </login-config>
 
+    <filter>
+        <filter-name>CharacterSetFilter</filter-name>
+        <filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>CharacterSetFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <jsp-config>
+        <jsp-property-group>
+            <url-pattern>*.jsp</url-pattern>
+            <page-encoding>UTF-8</page-encoding>
+        </jsp-property-group>
+    </jsp-config>
 </web-app>

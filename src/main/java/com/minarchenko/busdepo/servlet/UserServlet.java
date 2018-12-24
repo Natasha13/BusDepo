@@ -26,8 +26,18 @@ public class UserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws
             ServletException, IOException {
 
-        List<User> users = userService.getUsers(dataSource);
+        String pageString = req.getParameter("page");
+        if (pageString == null) {
+            pageString = "1";
+        }
+        Integer page = Integer.valueOf(pageString);
+        int pagesCount=0;
 
+        List<User> users = userService.getUsers(dataSource,page);
+        pagesCount=userService.countUsersPages(dataSource);
+
+        req.setAttribute("page", page);
+        req.setAttribute("pagesCount",pagesCount);
         req.setAttribute("users", users);
         RequestDispatcher rd = req.getRequestDispatcher("user.jsp");
         rd.forward(req, resp);

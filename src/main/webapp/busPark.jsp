@@ -21,7 +21,9 @@
 
 <table border="1" width="100%">
     <tr>
-        <th>ID</th>
+        <c:if test="${pageContext.request.isUserInRole('admin')}">
+            <th>ID</th>
+        </c:if>
         <th>Route ID</th>
         <th>Route Name</th>
         <th>Bus ID</th>
@@ -36,7 +38,9 @@
 
     <c:forEach var="busPark" items="${busParks}">
         <tr>
-            <td><c:out value="${busPark.id}"/></td>
+            <c:if test="${pageContext.request.isUserInRole('admin')}">
+                <td><c:out value="${busPark.id}"/></td>
+            </c:if>
             <td><c:out value="${busPark.route.id}"/></td>
             <td><c:out value="${busPark.route.routeName}"/></td>
             <td><c:out value="${busPark.bus.id}"/></td>
@@ -55,6 +59,28 @@
         </tr>
     </c:forEach>
 </table>
+
+<c:if test="${pageContext.request.isUserInRole('admin')}">
+<div style="display: inline-block">
+    <div  style="font-size:10px;">
+        <form action="busPark" method="get">
+            <input type="hidden" name="page" value="${page == null ? 2 : page +1}"><br>
+            <input type="submit" value="Next">
+        </form>
+    </div>
+    <div  style="font-size:10px;">
+        <c:out value="${pagesCount}"/><br>
+    </div>
+    <div  style="font-size:20px;">
+        <form action="busPark" method="get">
+            <input type="hidden" name="page" value="${page -1}"><br>
+            <input type="submit" value="Previous"
+            <c:if test="${page==null||page==1}"> disabled </c:if> >
+        </form>
+    </div>
+</div>
+</c:if>
+
 </body>
 </html>
 

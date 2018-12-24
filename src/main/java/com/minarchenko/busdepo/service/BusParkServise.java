@@ -16,8 +16,11 @@ import java.util.List;
 
 public class BusParkServise implements Serializable {
 
-    public List<BusPark> getBusParks(DataSource dataSource) {
+    private static final int PAGE_SIZE = 2;
+
+    public List<BusPark> getBusParks(DataSource dataSource, Integer page) {
         List<BusPark> busParks = new ArrayList<>();
+        Integer offset=(page-1)*PAGE_SIZE;
 
         String sql = "SELECT bp.id AS id ,bus_id,b.bus_number bus_number," +
                 " user_id, user_name, login, password, user_role," +
@@ -25,10 +28,13 @@ public class BusParkServise implements Serializable {
                 "FROM bus_park bp " +
                 "LEFT JOIN buses b ON bp.bus_id = b.id " +
                 "LEFT JOIN users ON bp.user_id = users.Id " +
-                "LEFT JOIN routes ON bp.route_id = routes.Id ";
+                "LEFT JOIN routes ON bp.route_id = routes.Id " +
+                "LIMIT ? OFFSET ?";
 
         try (Connection connection = dataSource.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setInt(1,PAGE_SIZE);
+                statement.setInt(2,offset);
                 try (ResultSet resultSet = statement.executeQuery()) {
                     while (resultSet.next()) {
                         Bus bus = new Bus(
@@ -60,6 +66,7 @@ public class BusParkServise implements Serializable {
         } catch (SQLException e) {
 //            log("SQL Exception: ", e);
         }
+
         return busParks;
     }
 
@@ -140,6 +147,7 @@ public class BusParkServise implements Serializable {
         }
     }
 
+
     public void busParkAccept(String busPark_id, DataSource dataSource) {
         String sql = "UPDATE bus_park SET accepted=NOT accepted WHERE id=?";
 
@@ -151,5 +159,22 @@ public class BusParkServise implements Serializable {
         } catch (SQLException e) {
             //  log("SQL Exception: ", e);
         }
+    }
+
+    public int countBusParkPages( DataSource dataSource) {
+        String sql = "SELECT count(*) from bus_park ";
+        int pagesCount=0;
+
+        try (Connection connection = dataSource.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    resultSet.next();
+                    pagesCount=(int)Math.ceil(resultSet.getDouble(1) /PAGE_SIZE);
+                }
+            }
+        } catch (SQLException e) {
+            //     log("SQL Exception: ", e);
+        }
+        return pagesCount;
     }
 }

@@ -13,6 +13,8 @@ import java.util.List;
 
 public class BusService implements Serializable {
 
+    private static final int PAGE_SIZE = 2;
+
    public List<Bus> getBuses(DataSource dataSource) {
         List<Bus> buses = new ArrayList<Bus>();
         String sql = "SELECT id,bus_number FROM buses";

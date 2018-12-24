@@ -37,5 +37,18 @@
         </tr>
     </c:forEach>
 </table>
+
+
+        <form action="users" method="get">
+            <input type="hidden" name="page" value="${page == null ? 2 : page +1}"><br>
+            <input type="submit" value="Next">
+        </form>
+
+        <c:out value="${pagesCount}"/><br>
+        <form action="users" method="get">
+            <input type="hidden" name="page" value="${page -1}"><br>
+            <input type="submit" value="Previous"
+            <c:if test="${page==null||page==1}"> disabled </c:if> >
+        </form>
 </body>
 </html>
