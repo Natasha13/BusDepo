@@ -1,6 +1,8 @@
 package com.minarchenko.busdepo.service;
 
 import com.minarchenko.busdepo.model.Bus;
+import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.ResultSetHandler;
 
 import javax.sql.DataSource;
 import java.io.Serializable;
@@ -15,12 +17,16 @@ public class BusService implements Serializable {
 
     private static final int PAGE_SIZE = 2;
 
-   public List<Bus> getBuses(DataSource dataSource) {
-        List<Bus> buses = new ArrayList<Bus>();
-        String sql = "SELECT id,bus_number FROM buses";
+   public List<Bus> getBuses(DataSource dataSource, Integer page) {
+        List<Bus> buses = new ArrayList<>();
+        Integer offset=(page-1)*PAGE_SIZE;
+
+        String sql = "SELECT id,bus_number FROM buses LIMIT ? OFFSET ?";
 
         try (Connection connection = dataSource.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setInt(1,PAGE_SIZE);
+                statement.setInt(2,offset);
                 try (ResultSet resultSet = statement.executeQuery()) {
                     while (resultSet.next()) {
                         Bus bus = new Bus(
@@ -58,6 +64,21 @@ public class BusService implements Serializable {
             }
         } catch (SQLException e) {
 //            log("SQL Exception: ", e);
+        }
+    }
+
+    public int countBusesPages( DataSource dataSource) {
+        String sql = "SELECT count(*) from buses ";
+        QueryRunner runner = new QueryRunner(dataSource);
+        ResultSetHandler<Integer> handler = resultSet -> {
+            resultSet.next();
+            return (int)Math.ceil(resultSet.getDouble(1) /PAGE_SIZE);
+        };
+        try {
+            return runner.execute(sql, handler).get(0);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
         }
     }
 }

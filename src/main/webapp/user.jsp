@@ -38,7 +38,6 @@
     </c:forEach>
 </table>
 
-
         <form action="users" method="get">
             <input type="hidden" name="page" value="${page == null ? 2 : page +1}"><br>
             <input type="submit" value="Next">

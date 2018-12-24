@@ -25,8 +25,21 @@ public class BusServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        List<Bus> buses = busService.getBuses(dataSource);
 
+        String pageString = req.getParameter("page");
+        if (pageString == null) {
+            pageString = "1";
+        }
+        Integer page = Integer.valueOf(pageString);
+        int pagesCount=0;
+
+        List<Bus> buses = busService.getBuses(dataSource,page);
+
+
+        pagesCount=busService.countBusesPages(dataSource);
+
+        req.setAttribute("page", page);
+        req.setAttribute("pagesCount",pagesCount);
         req.setAttribute("buses", buses);
         RequestDispatcher rd = req.getRequestDispatcher("bus.jsp");
         rd.forward(req, resp);

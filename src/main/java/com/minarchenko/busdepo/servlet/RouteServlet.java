@@ -23,10 +23,21 @@ public class RouteServlet extends HttpServlet {
     private DataSource dataSource;
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
 
-        List<Route> routes = routeService.getRoutes(dataSource);
+        String pageString = req.getParameter("page");
+        if (pageString == null) {
+            pageString = "1";
+        }
+        Integer page = Integer.valueOf(pageString);
+        int pagesCount=0;
 
+        List<Route> routes = routeService.getRoutes(dataSource,page);
+        pagesCount=routeService.countRoutesPages(dataSource);
+
+        req.setAttribute("page", page);
+        req.setAttribute("pagesCount",pagesCount);
         req.setAttribute("routes", routes);
         RequestDispatcher rd = req.getRequestDispatcher("route.jsp");
         rd.forward(req, resp);
