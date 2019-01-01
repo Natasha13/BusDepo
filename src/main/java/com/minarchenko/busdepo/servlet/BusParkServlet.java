@@ -23,6 +23,9 @@ public class BusParkServlet extends HttpServlet {
     @Resource(name = "BusDepo")
     private DataSource dataSource;
 
+    /**
+     *
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 

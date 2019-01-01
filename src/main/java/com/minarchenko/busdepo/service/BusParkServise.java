@@ -4,6 +4,8 @@ import com.minarchenko.busdepo.model.Bus;
 import com.minarchenko.busdepo.model.BusPark;
 import com.minarchenko.busdepo.model.Route;
 import com.minarchenko.busdepo.model.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.io.Serializable;
@@ -17,8 +19,11 @@ import java.util.List;
 public class BusParkServise implements Serializable {
 
     private static final int PAGE_SIZE = 2;
+    private static Logger logger = LoggerFactory.getLogger(BusParkServise.class);
 
     public List<BusPark> getBusParks(DataSource dataSource, Integer page) {
+        logger.debug("get all BusParks for page {}", page);
+
         List<BusPark> busParks = new ArrayList<>();
         Integer offset=(page-1)*PAGE_SIZE;
 
@@ -64,13 +69,15 @@ public class BusParkServise implements Serializable {
                 }
             }
         } catch (SQLException e) {
-//            log("SQL Exception: ", e);
+            logger.error("SQL error in getBusPark ", e);
         }
 
         return busParks;
     }
 
     public List<BusPark> getBusParksForUser(DataSource dataSource,String login) {
+        logger.debug("get BusPark by user");
+
         List<BusPark> busParks = new ArrayList<>();
 
         String sql = "SELECT bp.id AS id ,bus_id,b.bus_number bus_number," +
@@ -114,12 +121,15 @@ public class BusParkServise implements Serializable {
                 }
             }
         } catch (SQLException e) {
-//            log("SQL Exception: ", e);
+            logger.error("SQL error in getBusPark ", e);
         }
         return busParks;
     }
 
     public void addBusPark(String bus_id, String user_id, String route_id, DataSource dataSource) {
+        logger.info("Created new BusPark record. Bus_ID : {}, User_ID : {}, Route_ID : {}",
+                bus_id,user_id,route_id);
+
         String sql = "INSERT INTO bus_park (bus_id,user_id,route_id, accepted) values(?,?,?,false)";
 
         try (Connection connection = dataSource.getConnection()) {
@@ -130,11 +140,13 @@ public class BusParkServise implements Serializable {
                 statement.execute();
             }
         } catch (SQLException e) {
-       //     log("SQL Exception: ", e);
+            logger.error("SQL error in getBusPark ", e);
         }
     }
 
     public void busParkDelete(String busPark_id, DataSource dataSource) {
+        logger.info("Delete BusPark record. BusPark_ID : {}",busPark_id);
+
         String sql = "DELETE FROM bus_park WHERE id=?";
 
         try (Connection connection = dataSource.getConnection()) {
@@ -149,6 +161,8 @@ public class BusParkServise implements Serializable {
 
 
     public void busParkAccept(String busPark_id, DataSource dataSource) {
+        logger.info("User change acceptance of route. BusPark_ID : {}",busPark_id);
+
         String sql = "UPDATE bus_park SET accepted=NOT accepted WHERE id=?";
 
         try (Connection connection = dataSource.getConnection()) {
@@ -163,6 +177,7 @@ public class BusParkServise implements Serializable {
 
     public int countBusParkPages( DataSource dataSource) {
         String sql = "SELECT count(*) from bus_park ";
+
         int pagesCount=0;
 
         try (Connection connection = dataSource.getConnection()) {
@@ -175,6 +190,9 @@ public class BusParkServise implements Serializable {
         } catch (SQLException e) {
             //     log("SQL Exception: ", e);
         }
+
+        logger.debug("Number of pages : {}", pagesCount);
+
         return pagesCount;
     }
 }

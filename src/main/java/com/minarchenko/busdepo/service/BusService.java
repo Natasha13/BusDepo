@@ -3,6 +3,8 @@ package com.minarchenko.busdepo.service;
 import com.minarchenko.busdepo.model.Bus;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.io.Serializable;
@@ -14,19 +16,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BusService implements Serializable {
-
     private static final int PAGE_SIZE = 2;
+    private static Logger logger = LoggerFactory.getLogger(BusService.class);
 
-   public List<Bus> getBuses(DataSource dataSource, Integer page) {
+    public List<Bus> getBuses(DataSource dataSource, Integer page) {
+        logger.debug("getBuses for page {}", page);
+
         List<Bus> buses = new ArrayList<>();
-        Integer offset=(page-1)*PAGE_SIZE;
+        Integer offset = (page - 1) * PAGE_SIZE;
 
         String sql = "SELECT id,bus_number FROM buses LIMIT ? OFFSET ?";
 
         try (Connection connection = dataSource.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                statement.setInt(1,PAGE_SIZE);
-                statement.setInt(2,offset);
+                statement.setInt(1, PAGE_SIZE);
+                statement.setInt(2, offset);
                 try (ResultSet resultSet = statement.executeQuery()) {
                     while (resultSet.next()) {
                         Bus bus = new Bus(
@@ -37,12 +41,14 @@ public class BusService implements Serializable {
                 }
             }
         } catch (SQLException e) {
-            //log("SQL Exception: ", e);
+            logger.error("SQL error in getBuses ", e);
         }
         return buses;
     }
 
     public void addBus(String bus_number, DataSource dataSource) {
+        logger.info("created bus. Number : {}", bus_number);
+
         String sql = "INSERT INTO buses (bus_number) VALUES(?)";
         try (Connection connection = dataSource.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -50,11 +56,13 @@ public class BusService implements Serializable {
                 statement.execute();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQL error in getBuses ", e);
         }
     }
 
     public void busDelete(String bus_id, DataSource dataSource) {
+        logger.info("deleted bus. Bus ID : {}", bus_id);
+
         String sql = "DELETE FROM buses WHERE id=?";
 
         try (Connection connection = dataSource.getConnection()) {
@@ -63,21 +71,25 @@ public class BusService implements Serializable {
                 statement.execute();
             }
         } catch (SQLException e) {
-//            log("SQL Exception: ", e);
+            logger.error("SQL error in getBuses ", e);
         }
     }
 
-    public int countBusesPages( DataSource dataSource) {
+    public int countBusesPages(DataSource dataSource) {
+
         String sql = "SELECT count(*) from buses ";
+
+        logger.debug("Number of pages : {}", sql);
+
         QueryRunner runner = new QueryRunner(dataSource);
         ResultSetHandler<Integer> handler = resultSet -> {
             resultSet.next();
-            return (int)Math.ceil(resultSet.getDouble(1) /PAGE_SIZE);
+            return (int) Math.ceil(resultSet.getDouble(1) / PAGE_SIZE);
         };
         try {
             return runner.execute(sql, handler).get(0);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQL error in getBuses ", e);
             return 0;
         }
     }
