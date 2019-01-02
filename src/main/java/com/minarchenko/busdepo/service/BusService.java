@@ -61,7 +61,7 @@ public class BusService implements Serializable {
     }
 
     public void busDelete(String bus_id, DataSource dataSource) {
-        logger.info("deleted bus. Bus ID : {}", bus_id);
+        logger.info("Deleted bus. Bus ID : {}", bus_id);
 
         String sql = "DELETE FROM buses WHERE id=?";
 

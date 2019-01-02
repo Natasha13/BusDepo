@@ -1,7 +1,7 @@
 package com.minarchenko.busdepo.servlet;
 
 import com.minarchenko.busdepo.model.BusPark;
-import com.minarchenko.busdepo.service.BusParkServise;
+import com.minarchenko.busdepo.service.BusParkService;
 
 import javax.annotation.Resource;
 import javax.servlet.RequestDispatcher;
@@ -18,7 +18,7 @@ import java.util.List;
 @WebServlet(name = "BusParkServlet", urlPatterns = {"/busPark"})
 public class BusParkServlet extends HttpServlet {
 
-    private BusParkServise busParkServise = new BusParkServise();
+    private BusParkService busParkService = new BusParkService();
 
     @Resource(name = "BusDepo")
     private DataSource dataSource;
@@ -40,11 +40,11 @@ public class BusParkServlet extends HttpServlet {
         List<BusPark> busParks;
 
         if (req.isUserInRole("driver")) {
-            busParks = busParkServise.getBusParksForUser(dataSource, userPrincipal.getName());
+            busParks = busParkService.getBusParksForUser(dataSource, userPrincipal.getName());
             pagesCount=1;
         } else {
-            busParks = busParkServise.getBusParks(dataSource, page);
-            pagesCount=busParkServise.countBusParkPages(dataSource);
+            busParks = busParkService.getBusParks(dataSource, page);
+            pagesCount= busParkService.countBusParkPages(dataSource);
         }
 
 
@@ -64,7 +64,7 @@ public class BusParkServlet extends HttpServlet {
         String user_id = req.getParameter("user_id");
         String route_id = req.getParameter("route_id");
 
-        busParkServise.addBusPark(bus_id, user_id, route_id, dataSource);
+        busParkService.addBusPark(bus_id, user_id, route_id, dataSource);
 
         resp.sendRedirect("/busPark");
     }

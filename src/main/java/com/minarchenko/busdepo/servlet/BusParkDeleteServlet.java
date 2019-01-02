@@ -1,6 +1,6 @@
 package com.minarchenko.busdepo.servlet;
 
-import com.minarchenko.busdepo.service.BusParkServise;
+import com.minarchenko.busdepo.service.BusParkService;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
@@ -14,7 +14,7 @@ import java.io.IOException;
 @WebServlet(name = "BusParkDeleteServlet", urlPatterns = {"/busParkDelete"})
 public class BusParkDeleteServlet extends HttpServlet {
 
-    private BusParkServise busParkServise=new BusParkServise();
+    private BusParkService busParkService =new BusParkService();
 
     @Resource(name = "BusDepo")
     private DataSource dataSource;
@@ -24,7 +24,7 @@ public class BusParkDeleteServlet extends HttpServlet {
             throws ServletException, IOException {
         String busPark_id = req.getParameter("busPark_id");
 
-        busParkServise.busParkDelete(busPark_id,dataSource);
+        busParkService.busParkDelete(busPark_id,dataSource);
 
         resp.sendRedirect("/busPark");
     }

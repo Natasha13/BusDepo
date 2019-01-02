@@ -16,10 +16,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BusParkServise implements Serializable {
+public class BusParkService implements Serializable {
 
     private static final int PAGE_SIZE = 2;
-    private static Logger logger = LoggerFactory.getLogger(BusParkServise.class);
+    private static Logger logger = LoggerFactory.getLogger(BusParkService.class);
 
     public List<BusPark> getBusParks(DataSource dataSource, Integer page) {
         logger.debug("get all BusParks for page {}", page);
@@ -69,7 +69,7 @@ public class BusParkServise implements Serializable {
                 }
             }
         } catch (SQLException e) {
-            logger.error("SQL error in getBusPark ", e);
+            logger.error("SQL error in getBusParks ", e);
         }
 
         return busParks;
@@ -121,7 +121,7 @@ public class BusParkServise implements Serializable {
                 }
             }
         } catch (SQLException e) {
-            logger.error("SQL error in getBusPark ", e);
+            logger.error("SQL error in getBusParksForUser ", e);
         }
         return busParks;
     }
@@ -140,7 +140,7 @@ public class BusParkServise implements Serializable {
                 statement.execute();
             }
         } catch (SQLException e) {
-            logger.error("SQL error in getBusPark ", e);
+            logger.error("SQL error in addBusPark", e);
         }
     }
 
@@ -155,7 +155,7 @@ public class BusParkServise implements Serializable {
                 statement.execute();
             }
         } catch (SQLException e) {
-            //  log("SQL Exception: ", e);
+            logger.error("SQL error in busParkDelete", e);
         }
     }
 
@@ -171,7 +171,7 @@ public class BusParkServise implements Serializable {
                 statement.execute();
             }
         } catch (SQLException e) {
-            //  log("SQL Exception: ", e);
+            logger.error("SQL error in busParkAccept", e);
         }
     }
 
@@ -188,7 +188,7 @@ public class BusParkServise implements Serializable {
                 }
             }
         } catch (SQLException e) {
-            //     log("SQL Exception: ", e);
+            logger.error("SQL error in countBusParkPages", e);
         }
 
         logger.debug("Number of pages : {}", pagesCount);

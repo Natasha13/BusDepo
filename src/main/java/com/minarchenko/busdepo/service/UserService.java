@@ -6,6 +6,8 @@ import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.security.NoSuchAlgorithmException;
@@ -19,8 +21,11 @@ import java.util.List;
 public class UserService {
 
     private static final int PAGE_SIZE = 2;
+    private static Logger logger = LoggerFactory.getLogger(BusParkService.class);
 
     public List<User> getUsers(DataSource dataSource, Integer page) {
+        logger.debug("get all Users for page {}", page);
+
         List<User> users = new ArrayList<>();
         Integer offset=(page-1)*PAGE_SIZE;
 
@@ -44,13 +49,17 @@ public class UserService {
                 }
             }
         } catch (SQLException e) {
-//            log("SQL Exception: ", e);
+            logger.error("SQL error in getUsers", e);
         }
         return users;
     }
 
 
     public void addUser(String user_name, String login, String password, String user_role, DataSource dataSource) {
+        logger.info("Created new User record. User_name : {}, Login : {}, " +
+                        "Password : {}, User_role {}",
+                user_name,login,password,user_role);
+
         MessageDigestCredentialHandler passwordHandler = new MessageDigestCredentialHandler();
         try {
             passwordHandler.setAlgorithm("SHA-256");
@@ -66,33 +75,41 @@ public class UserService {
         try {
             runner.execute(sql, user_name,login,passwordHash,user_role);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQL error in addUser", e);
         }
     }
 
     public void userDelete(String user_id, DataSource dataSource) {
+        logger.info("Delete User record. BusPark_ID : {}",user_id);
+
         String sql = "DELETE FROM users WHERE id=?";
 
         QueryRunner runner = new QueryRunner(dataSource);
         try {
             runner.execute(sql, user_id);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQL error in userDelete", e);
         }
     }
 
     public int countUsersPages( DataSource dataSource) {
+
         String sql = "SELECT count(*) from users ";
+        int pagesCount=0;
+
         QueryRunner runner = new QueryRunner(dataSource);
         ResultSetHandler<Integer> handler = resultSet -> {
             resultSet.next();
             return (int)Math.ceil(resultSet.getDouble(1) /PAGE_SIZE);
         };
         try {
-            return runner.execute(sql, handler).get(0);
+            pagesCount=runner.execute(sql, handler).get(0);
+            logger.debug("Number of pages : {}", pagesCount);
+            return pagesCount;
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQL error in countUsersPages", e);
             return 0;
         }
     }
+
 }
