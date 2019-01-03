@@ -2,6 +2,8 @@ package com.minarchenko.busdepo.servlet;
 
 import com.minarchenko.busdepo.model.User;
 import com.minarchenko.busdepo.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
 import javax.servlet.RequestDispatcher;
@@ -16,6 +18,7 @@ import java.util.List;
 
 @WebServlet(name = "UserServlet", urlPatterns = {"/users"})
 public class UserServlet extends HttpServlet {
+    private static Logger logger = LoggerFactory.getLogger(UserServlet.class);
 
     private final UserService userService=new UserService();
 
@@ -27,6 +30,9 @@ public class UserServlet extends HttpServlet {
             ServletException, IOException {
 
         String pageString = req.getParameter("page");
+
+        logger.debug("Users doGet. Page : {}",pageString);
+
         if (pageString == null) {
             pageString = "1";
         }

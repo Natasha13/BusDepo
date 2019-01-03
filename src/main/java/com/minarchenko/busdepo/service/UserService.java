@@ -21,7 +21,7 @@ import java.util.List;
 public class UserService {
 
     private static final int PAGE_SIZE = 2;
-    private static Logger logger = LoggerFactory.getLogger(BusParkService.class);
+    private static Logger logger = LoggerFactory.getLogger(User.class);
 
     public List<User> getUsers(DataSource dataSource, Integer page) {
         logger.debug("get all Users for page {}", page);

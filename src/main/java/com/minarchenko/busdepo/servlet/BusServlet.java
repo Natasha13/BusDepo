@@ -2,6 +2,8 @@ package com.minarchenko.busdepo.servlet;
 
 import com.minarchenko.busdepo.model.Bus;
 import com.minarchenko.busdepo.service.BusService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
 import javax.servlet.RequestDispatcher;
@@ -17,6 +19,8 @@ import java.util.List;
 @WebServlet(name = "BusServlet", urlPatterns = {"/buses"})
 public class BusServlet extends HttpServlet {
 
+    private static Logger logger = LoggerFactory.getLogger(BusServlet.class);
+
     private final BusService busService = new BusService();
 
     @Resource(name = "BusDepo")
@@ -25,8 +29,10 @@ public class BusServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-
         String pageString = req.getParameter("page");
+
+        logger.debug("BusServlet doGet. Page : {}",pageString);
+
         if (pageString == null) {
             pageString = "1";
         }
@@ -49,6 +55,8 @@ public class BusServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         String bus_number = req.getParameter("bus_number");
+
+        logger.info("BusServlet doPost. Bus number : {}",bus_number);
 
         busService.addBus(bus_number, dataSource);
 

@@ -2,6 +2,8 @@ package com.minarchenko.busdepo.servlet;
 
 import com.minarchenko.busdepo.model.BusPark;
 import com.minarchenko.busdepo.service.BusParkService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
 import javax.servlet.RequestDispatcher;
@@ -17,6 +19,7 @@ import java.util.List;
 
 @WebServlet(name = "BusParkServlet", urlPatterns = {"/busPark"})
 public class BusParkServlet extends HttpServlet {
+    private static Logger logger = LoggerFactory.getLogger(BusParkServlet.class);
 
     private BusParkService busParkService = new BusParkService();
 
@@ -31,6 +34,9 @@ public class BusParkServlet extends HttpServlet {
 
         Principal userPrincipal = req.getUserPrincipal();
         String pageString = req.getParameter("page");
+
+        logger.debug("BusParkServlet doGet. Page : {}",pageString);
+
         if (pageString == null) {
             pageString = "1";
         }
@@ -47,8 +53,6 @@ public class BusParkServlet extends HttpServlet {
             pagesCount= busParkService.countBusParkPages(dataSource);
         }
 
-
-
         req.setAttribute("page", page);
         req.setAttribute("pagesCount",pagesCount);
         req.setAttribute("busParks", busParks);
@@ -63,6 +67,8 @@ public class BusParkServlet extends HttpServlet {
         String bus_id = req.getParameter("bus_id");
         String user_id = req.getParameter("user_id");
         String route_id = req.getParameter("route_id");
+
+        logger.info("BusParkServlet doPost. Bus_ID : {}, User_ID : {}, Route_ID : {}",bus_id,user_id,route_id);
 
         busParkService.addBusPark(bus_id, user_id, route_id, dataSource);
 

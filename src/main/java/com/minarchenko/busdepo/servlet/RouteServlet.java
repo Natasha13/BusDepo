@@ -2,6 +2,8 @@ package com.minarchenko.busdepo.servlet;
 
 import com.minarchenko.busdepo.model.Route;
 import com.minarchenko.busdepo.service.RouteService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
 import javax.servlet.RequestDispatcher;
@@ -16,6 +18,7 @@ import java.util.List;
 
 @WebServlet(name = "RouteServlet", urlPatterns = {"/routes"})
 public class RouteServlet extends HttpServlet {
+    private static Logger logger = LoggerFactory.getLogger(RouteServlet.class);
 
     private final RouteService routeService = new RouteService();
 
@@ -27,6 +30,9 @@ public class RouteServlet extends HttpServlet {
             throws ServletException, IOException {
 
         String pageString = req.getParameter("page");
+
+        logger.debug("RouteServlet doGet. Page : {}",pageString);
+
         if (pageString == null) {
             pageString = "1";
         }
@@ -47,6 +53,8 @@ public class RouteServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse resp)
             throws IOException {
         String route_name = request.getParameter("route_name");
+
+        logger.info("RouteServlet doPost. Route name : {}",route_name);
 
         routeService.addRoute(route_name, dataSource);
 
