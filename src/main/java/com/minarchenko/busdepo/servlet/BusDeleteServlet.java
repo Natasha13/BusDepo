@@ -35,4 +35,12 @@ public class BusDeleteServlet extends HttpServlet {
 
         resp.sendRedirect("/buses");
     }
+
+    public void setBusService(BusService busService) {
+        this.busService = busService;
+    }
+
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 }

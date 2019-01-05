@@ -69,14 +69,4 @@ SELECT * FROM buses;
 SELECT * FROM users;
 SELECT * FROM routes;
 
-UPDATE buses set bus_number='AA 1867 AA' WHERE id=4;
-
-SELECT bp.id AS id ,bus_id,b.bus_number bus_number, user_id, user_name, login,
-  password, user_role, route_id,route_name, accepted FROM bus_park bp
-  LEFT JOIN buses b ON bp.bus_id = b.id LEFT JOIN users ON bp.user_id = users.Id
-  LEFT JOIN routes ON bp.route_id = routes.Id
-LIMIT 10 OFFSET 0
-;
-SELECT count(*)
-from users;
 
