@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import java.io.IOException;
 
+/**
+ * A Servlet , that processes http requests from delete Bus record button
+ */
 @WebServlet(name = "BusDeleteServlet", urlPatterns = {"/busDelete"})
 public class BusDeleteServlet extends HttpServlet {
     private static Logger logger = LoggerFactory.getLogger(BusDeleteServlet.class);
