@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import java.io.IOException;
 
-
+/**
+ * A Servlet , that processes http requests from delete User record button
+ */
 @WebServlet(name = "UserDeleteServlet", urlPatterns = {"/usersDelete"})
 public class UserDeleteServlet extends HttpServlet {
     private static Logger logger = LoggerFactory.getLogger(UserDeleteServlet.class);

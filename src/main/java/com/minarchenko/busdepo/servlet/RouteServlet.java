@@ -16,6 +16,9 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * A Servlet, which is used for showing Route entities and adding new entities
+ */
 @WebServlet(name = "RouteServlet", urlPatterns = {"/routes"})
 public class RouteServlet extends HttpServlet {
     private static Logger logger = LoggerFactory.getLogger(RouteServlet.class);
@@ -25,6 +28,9 @@ public class RouteServlet extends HttpServlet {
     @Resource(name = "BusDepo")
     private DataSource dataSource;
 
+    /**
+     * Returns a page of Route entities from dataSource for admin or driver
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
@@ -49,6 +55,9 @@ public class RouteServlet extends HttpServlet {
         rd.forward(req, resp);
     }
 
+    /**
+     * Processes http requests by admin for adding new Route entity
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse resp)
             throws IOException {

@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import java.io.IOException;
 
+/**
+ * A Servlet , that processes http requests from delete Route record button
+ */
 @WebServlet(name = "RouteDeleteServlet", urlPatterns = {"/routeDelete"})
 public class RouteDeleteServlet extends HttpServlet {
     private static Logger logger = LoggerFactory.getLogger(RouteDeleteServlet.class);

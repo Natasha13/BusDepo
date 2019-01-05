@@ -16,6 +16,9 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * A Servlet, which is used for showing Bus entities and adding new entities
+ */
 @WebServlet(name = "BusServlet", urlPatterns = {"/buses"})
 public class BusServlet extends HttpServlet {
 
@@ -26,6 +29,9 @@ public class BusServlet extends HttpServlet {
     @Resource(name = "BusDepo")
     private DataSource dataSource;
 
+    /**
+     * Returns a page of Bus entities from dataSource for admin or driver
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -51,6 +57,9 @@ public class BusServlet extends HttpServlet {
         rd.forward(req, resp);
     }
 
+    /**
+     * Processes http requests by admin for adding new Bus entity
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
