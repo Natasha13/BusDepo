@@ -16,11 +16,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Service that contains business logic to work with BusPark entities
+ */
 public class BusParkService implements Serializable {
 
     private static final int PAGE_SIZE = 2;
     private static Logger logger = LoggerFactory.getLogger(BusParkService.class);
 
+    /**
+     * Returns a page of BusPark entities from dataSource for admin
+     * @param dataSource a dataSource to read from
+     * @param page a page to show
+     */
     public List<BusPark> getBusParks(DataSource dataSource, Integer page) {
         logger.debug("get all BusParks for page {}", page);
 
@@ -75,6 +83,11 @@ public class BusParkService implements Serializable {
         return busParks;
     }
 
+    /**
+     * Returns a page of BusPark entities from dataSource for driver
+     * @param dataSource a dataSource to read from
+     * @param login login of a driver
+     */
     public List<BusPark> getBusParksForUser(DataSource dataSource,String login) {
         logger.debug("get BusPark by user");
 
@@ -126,7 +139,11 @@ public class BusParkService implements Serializable {
         return busParks;
     }
 
+    /**
+     * Adds new BusPark record to database
+     */
     public void addBusPark(String bus_id, String user_id, String route_id, DataSource dataSource) {
+
         logger.info("Created new BusPark record. Bus_ID : {}, User_ID : {}, Route_ID : {}",
                 bus_id,user_id,route_id);
 
@@ -144,6 +161,9 @@ public class BusParkService implements Serializable {
         }
     }
 
+    /**
+     * Delete BusPark record from database
+     */
     public void busParkDelete(String busPark_id, DataSource dataSource) {
         logger.info("Delete BusPark record. BusPark_ID : {}",busPark_id);
 
@@ -159,7 +179,9 @@ public class BusParkService implements Serializable {
         }
     }
 
-
+    /**
+     * Change accept status by driver
+     */
     public void busParkAccept(String busPark_id, DataSource dataSource) {
         logger.info("User change acceptance of route. BusPark_ID : {}",busPark_id);
 
@@ -175,6 +197,9 @@ public class BusParkService implements Serializable {
         }
     }
 
+    /**
+     * Return number of pages of BusPark records
+     */
     public int countBusParkPages( DataSource dataSource) {
         String sql = "SELECT count(*) from bus_park ";
 

@@ -1,5 +1,15 @@
 package com.minarchenko.busdepo.model;
 
+/**
+ *  Database entity with BusPark data in it.
+ *  Stored in table:
+ *  bus (  id INT NOT NULL AUTO_INCREMENT, bus_id INT NOT NULL UNIQUE ,
+ *  user_id INT NOT NULL  UNIQUE ,route_id INT NOT NULL  ,
+ *  accepted BOOLEAN NOT NULL , FOREIGN KEY (bus_id) REFERENCES buses (Id) ON DELETE CASCADE,
+ *  FOREIGN KEY (user_id) REFERENCES users (Id) ON DELETE CASCADE,
+ *  FOREIGN KEY (route_id) REFERENCES routes (Id) ON DELETE CASCADE,
+ *  PRIMARY KEY (id))
+ */
 public class BusPark {
     private int id;
     private Bus bus;

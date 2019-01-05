@@ -15,10 +15,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Service that contains business logic to work with Bus entities
+ */
 public class BusService implements Serializable {
     private static final int PAGE_SIZE = 2;
     private static Logger logger = LoggerFactory.getLogger(BusService.class);
 
+    /**
+     * Returns a page of Bus entities from dataSource for admin
+     * @param dataSource a dataSource to read from
+     * @param page a page to show
+     */
     public List<Bus> getBuses(DataSource dataSource, Integer page) {
         logger.debug("getBuses for page {}", page);
 
@@ -46,6 +54,9 @@ public class BusService implements Serializable {
         return buses;
     }
 
+    /**
+     * Adds new Bus record to database
+     */
     public void addBus(String bus_number, DataSource dataSource) {
         logger.info("created bus. Number : {}", bus_number);
 
@@ -60,6 +71,9 @@ public class BusService implements Serializable {
         }
     }
 
+    /**
+     * Delete Bus record from database
+     */
     public void busDelete(String bus_id, DataSource dataSource) {
         logger.info("Deleted bus. Bus ID : {}", bus_id);
 
@@ -75,6 +89,9 @@ public class BusService implements Serializable {
         }
     }
 
+    /**
+     * Return number of pages of Bus records
+     */
     public int countBusesPages(DataSource dataSource) {
 
         String sql = "SELECT count(*) from buses ";

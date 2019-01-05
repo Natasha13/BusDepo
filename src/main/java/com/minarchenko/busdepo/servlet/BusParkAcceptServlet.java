@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import java.io.IOException;
 
+/**
+ * A Servlet, that processes http requests from accept BusPark button
+ */
 @WebServlet(name = "BusParkAcceptServlet", urlPatterns = {"/busParkAccept"})
 public class BusParkAcceptServlet extends HttpServlet {
     private static Logger logger = LoggerFactory.getLogger(BusParkAcceptServlet.class);

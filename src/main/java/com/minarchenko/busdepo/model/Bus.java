@@ -1,5 +1,10 @@
 package com.minarchenko.busdepo.model;
 
+/**
+ *  Database entity with Bus data in it.
+ *  Stored in table:
+ *  bus (id INT NOT NULL AUTO_INCREMENT, bus_number varchar(30))
+ */
 public class Bus {
     private int id;
     private String busNumber;

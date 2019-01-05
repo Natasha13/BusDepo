@@ -17,6 +17,9 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 
+/**
+ * A Servlet, which is used for showing BusPark entities and adding new entities
+ */
 @WebServlet(name = "BusParkServlet", urlPatterns = {"/busPark"})
 public class BusParkServlet extends HttpServlet {
     private static Logger logger = LoggerFactory.getLogger(BusParkServlet.class);
@@ -27,7 +30,7 @@ public class BusParkServlet extends HttpServlet {
     private DataSource dataSource;
 
     /**
-     *
+     * Returns a page of BusPark entities from dataSource for admin or driver
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -60,7 +63,9 @@ public class BusParkServlet extends HttpServlet {
         rd.forward(req, resp);
     }
 
-
+    /**
+     * Processes http requests by admin for adding new BusPark entity
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
