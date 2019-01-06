@@ -1,9 +1,9 @@
 package com.minarchenko.busdepo.model;
 
 /**
- *  Database entity with Bus data in it.
- *  Stored in table:
- *  bus (id INT NOT NULL AUTO_INCREMENT, bus_number varchar(30))
+ * Database entity with Bus data in it.
+ * Stored in table:
+ * bus (id INT NOT NULL AUTO_INCREMENT, bus_number varchar(30))
  */
 public class Bus {
     private int id;
@@ -31,10 +31,28 @@ public class Bus {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Bus bus = (Bus) o;
+
+        if (id != bus.id) return false;
+        return busNumber != null ? busNumber.equals(bus.busNumber) : bus.busNumber == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (busNumber != null ? busNumber.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "Bus{" +
-                ", id=" + id +
-                "busNumber='" + busNumber + '\'' +
+                "id=" + id +
+                ", busNumber='" + busNumber + '\'' +
                 '}';
     }
 }

@@ -21,12 +21,19 @@ import java.util.List;
  */
 @WebServlet(name = "RouteServlet", urlPatterns = {"/routes"})
 public class RouteServlet extends HttpServlet {
+
     private static Logger logger = LoggerFactory.getLogger(RouteServlet.class);
-
-    private final RouteService routeService = new RouteService();
-
+    private RouteService routeService = new RouteService();
     @Resource(name = "BusDepo")
     private DataSource dataSource;
+
+    public void setRouteService(RouteService routeService) {
+        this.routeService = routeService;
+    }
+
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     /**
      * Returns a page of Route entities from dataSource for admin or driver
@@ -37,19 +44,19 @@ public class RouteServlet extends HttpServlet {
 
         String pageString = req.getParameter("page");
 
-        logger.debug("RouteServlet doGet. Page : {}",pageString);
+        logger.debug("RouteServlet doGet. Page : {}", pageString);
 
         if (pageString == null) {
             pageString = "1";
         }
         Integer page = Integer.valueOf(pageString);
-        int pagesCount=0;
+        int pagesCount = 0;
 
-        List<Route> routes = routeService.getRoutes(dataSource,page);
-        pagesCount=routeService.countRoutesPages(dataSource);
+        List<Route> routes = routeService.getRoutes(dataSource, page);
+        pagesCount = routeService.countRoutesPages(dataSource);
 
         req.setAttribute("page", page);
-        req.setAttribute("pagesCount",pagesCount);
+        req.setAttribute("pagesCount", pagesCount);
         req.setAttribute("routes", routes);
         RequestDispatcher rd = req.getRequestDispatcher("route.jsp");
         rd.forward(req, resp);
@@ -63,7 +70,7 @@ public class RouteServlet extends HttpServlet {
             throws IOException {
         String route_name = request.getParameter("route_name");
 
-        logger.info("RouteServlet doPost. Route name : {}",route_name);
+        logger.info("RouteServlet doPost. Route name : {}", route_name);
 
         routeService.addRoute(route_name, dataSource);
 

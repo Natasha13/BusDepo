@@ -28,10 +28,12 @@ public class BusDeleteServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        String bus_id = req.getParameter("bus_id");
-        logger.info("BusDeleteServlet doPost. BusPark_ID : {}",bus_id);
 
-        busService.busDelete(bus_id,dataSource);
+        String bus_id = req.getParameter("bus_id");
+
+        logger.info("BusDeleteServlet doPost. BusPark_ID : {}", bus_id);
+
+        busService.busDelete(bus_id, dataSource);
 
         resp.sendRedirect("/buses");
     }

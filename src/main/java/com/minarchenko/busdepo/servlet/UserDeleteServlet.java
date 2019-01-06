@@ -17,9 +17,11 @@ import java.io.IOException;
  * A Servlet , that processes http requests from delete User record button
  */
 @WebServlet(name = "UserDeleteServlet", urlPatterns = {"/usersDelete"})
+
 public class UserDeleteServlet extends HttpServlet {
+
     private static Logger logger = LoggerFactory.getLogger(UserDeleteServlet.class);
-    private UserService userService=new UserService();
+    private UserService userService = new UserService();
 
     @Resource(name = "BusDepo")
     private DataSource dataSource;
@@ -32,9 +34,16 @@ public class UserDeleteServlet extends HttpServlet {
 
         logger.info("UserDeleteServlet doPost. User");
 
-        userService.userDelete(user_id,dataSource);
+        userService.userDelete(user_id, dataSource);
 
         resp.sendRedirect("/users");
     }
 
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 }

@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
-import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,14 +17,15 @@ import java.util.List;
 /**
  * Service that contains business logic to work with Bus entities
  */
-public class BusService implements Serializable {
+public class BusService {
     private static final int PAGE_SIZE = 2;
     private static Logger logger = LoggerFactory.getLogger(BusService.class);
 
     /**
      * Returns a page of Bus entities from dataSource for admin
+     *
      * @param dataSource a dataSource to read from
-     * @param page a page to show
+     * @param page       a page to show
      */
     public List<Bus> getBuses(DataSource dataSource, Integer page) {
         logger.debug("getBuses for page {}", page);

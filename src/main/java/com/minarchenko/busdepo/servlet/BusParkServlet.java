@@ -23,11 +23,17 @@ import java.util.List;
 @WebServlet(name = "BusParkServlet", urlPatterns = {"/busPark"})
 public class BusParkServlet extends HttpServlet {
     private static Logger logger = LoggerFactory.getLogger(BusParkServlet.class);
-
     private BusParkService busParkService = new BusParkService();
-
     @Resource(name = "BusDepo")
     private DataSource dataSource;
+
+    public void setBusParkService(BusParkService busParkService) {
+        this.busParkService = busParkService;
+    }
+
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     /**
      * Returns a page of BusPark entities from dataSource for admin or driver
@@ -38,26 +44,26 @@ public class BusParkServlet extends HttpServlet {
         Principal userPrincipal = req.getUserPrincipal();
         String pageString = req.getParameter("page");
 
-        logger.debug("BusParkServlet doGet. Page : {}",pageString);
+        logger.debug("BusParkServlet doGet. Page : {}", pageString);
 
         if (pageString == null) {
             pageString = "1";
         }
         Integer page = Integer.valueOf(pageString);
-        int pagesCount=0;
+        int pagesCount = 0;
 
         List<BusPark> busParks;
 
         if (req.isUserInRole("driver")) {
             busParks = busParkService.getBusParksForUser(dataSource, userPrincipal.getName());
-            pagesCount=1;
+            pagesCount = 1;
         } else {
             busParks = busParkService.getBusParks(dataSource, page);
-            pagesCount= busParkService.countBusParkPages(dataSource);
+            pagesCount = busParkService.countBusParkPages(dataSource);
         }
 
         req.setAttribute("page", page);
-        req.setAttribute("pagesCount",pagesCount);
+        req.setAttribute("pagesCount", pagesCount);
         req.setAttribute("busParks", busParks);
         RequestDispatcher rd = req.getRequestDispatcher("busPark.jsp");
         rd.forward(req, resp);
@@ -73,7 +79,7 @@ public class BusParkServlet extends HttpServlet {
         String user_id = req.getParameter("user_id");
         String route_id = req.getParameter("route_id");
 
-        logger.info("BusParkServlet doPost. Bus_ID : {}, User_ID : {}, Route_ID : {}",bus_id,user_id,route_id);
+        logger.info("BusParkServlet doPost. Bus_ID : {}, User_ID : {}, Route_ID : {}", bus_id, user_id, route_id);
 
         busParkService.addBusPark(bus_id, user_id, route_id, dataSource);
 

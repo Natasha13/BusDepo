@@ -22,11 +22,17 @@ import java.util.List;
 @WebServlet(name = "UserServlet", urlPatterns = {"/users"})
 public class UserServlet extends HttpServlet {
     private static Logger logger = LoggerFactory.getLogger(UserServlet.class);
-
-    private final UserService userService=new UserService();
-
+    private UserService userService = new UserService();
     @Resource(name = "BusDepo")
     private DataSource dataSource;
+
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     /**
      * Returns a page of User entities from dataSource for admin or driver
@@ -37,19 +43,19 @@ public class UserServlet extends HttpServlet {
 
         String pageString = req.getParameter("page");
 
-        logger.debug("Users doGet. Page : {}",pageString);
+        logger.debug("Users doGet. Page : {}", pageString);
 
         if (pageString == null) {
             pageString = "1";
         }
         Integer page = Integer.valueOf(pageString);
-        int pagesCount=0;
+        int pagesCount = 0;
 
-        List<User> users = userService.getUsers(dataSource,page);
-        pagesCount=userService.countUsersPages(dataSource);
+        List<User> users = userService.getUsers(dataSource, page);
+        pagesCount = userService.countUsersPages(dataSource);
 
         req.setAttribute("page", page);
-        req.setAttribute("pagesCount",pagesCount);
+        req.setAttribute("pagesCount", pagesCount);
         req.setAttribute("users", users);
         RequestDispatcher rd = req.getRequestDispatcher("user.jsp");
         rd.forward(req, resp);
@@ -67,7 +73,7 @@ public class UserServlet extends HttpServlet {
         String password = req.getParameter("password");
         String user_role = req.getParameter("user_role");
 
-        userService.addUser(user_name, login, password, user_role,dataSource);
+        userService.addUser(user_name, login, password, user_role, dataSource);
 
         resp.sendRedirect("/users");
     }

@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
-import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,21 +18,22 @@ import java.util.List;
 /**
  * Service that contains business logic to work with BusPark entities
  */
-public class BusParkService implements Serializable {
+public class BusParkService {
 
     private static final int PAGE_SIZE = 2;
     private static Logger logger = LoggerFactory.getLogger(BusParkService.class);
 
     /**
      * Returns a page of BusPark entities from dataSource for admin
+     *
      * @param dataSource a dataSource to read from
-     * @param page a page to show
+     * @param page       a page to show
      */
     public List<BusPark> getBusParks(DataSource dataSource, Integer page) {
         logger.debug("get all BusParks for page {}", page);
 
         List<BusPark> busParks = new ArrayList<>();
-        Integer offset=(page-1)*PAGE_SIZE;
+        Integer offset = (page - 1) * PAGE_SIZE;
 
         String sql = "SELECT bp.id AS id ,bus_id,b.bus_number bus_number," +
                 " user_id, user_name, login, password, user_role," +
@@ -46,8 +46,8 @@ public class BusParkService implements Serializable {
 
         try (Connection connection = dataSource.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                statement.setInt(1,PAGE_SIZE);
-                statement.setInt(2,offset);
+                statement.setInt(1, PAGE_SIZE);
+                statement.setInt(2, offset);
                 try (ResultSet resultSet = statement.executeQuery()) {
                     while (resultSet.next()) {
                         Bus bus = new Bus(
@@ -85,10 +85,11 @@ public class BusParkService implements Serializable {
 
     /**
      * Returns a page of BusPark entities from dataSource for driver
+     *
      * @param dataSource a dataSource to read from
-     * @param login login of a driver
+     * @param login      login of a driver
      */
-    public List<BusPark> getBusParksForUser(DataSource dataSource,String login) {
+    public List<BusPark> getBusParksForUser(DataSource dataSource, String login) {
         logger.debug("get BusPark by user");
 
         List<BusPark> busParks = new ArrayList<>();
@@ -145,9 +146,9 @@ public class BusParkService implements Serializable {
     public void addBusPark(String bus_id, String user_id, String route_id, DataSource dataSource) {
 
         logger.info("Created new BusPark record. Bus_ID : {}, User_ID : {}, Route_ID : {}",
-                bus_id,user_id,route_id);
+                bus_id, user_id, route_id);
 
-        String sql = "INSERT INTO bus_park (bus_id,user_id,route_id, accepted) values(?,?,?,false)";
+        String sql = "INSERT INTO bus_park (bus_id,user_id,route_id, accepted) VALUES(?,?,?,FALSE)";
 
         try (Connection connection = dataSource.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -165,7 +166,7 @@ public class BusParkService implements Serializable {
      * Delete BusPark record from database
      */
     public void busParkDelete(String busPark_id, DataSource dataSource) {
-        logger.info("Delete BusPark record. BusPark_ID : {}",busPark_id);
+        logger.info("Delete BusPark record. BusPark_ID : {}", busPark_id);
 
         String sql = "DELETE FROM bus_park WHERE id=?";
 
@@ -183,7 +184,7 @@ public class BusParkService implements Serializable {
      * Change accept status by driver
      */
     public void busParkAccept(String busPark_id, DataSource dataSource) {
-        logger.info("User change acceptance of route. BusPark_ID : {}",busPark_id);
+        logger.info("User change acceptance of route. BusPark_ID : {}", busPark_id);
 
         String sql = "UPDATE bus_park SET accepted=NOT accepted WHERE id=?";
 
@@ -200,16 +201,16 @@ public class BusParkService implements Serializable {
     /**
      * Return number of pages of BusPark records
      */
-    public int countBusParkPages( DataSource dataSource) {
-        String sql = "SELECT count(*) from bus_park ";
+    public int countBusParkPages(DataSource dataSource) {
+        String sql = "SELECT count(*) FROM bus_park ";
 
-        int pagesCount=0;
+        int pagesCount = 0;
 
         try (Connection connection = dataSource.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 try (ResultSet resultSet = statement.executeQuery()) {
                     resultSet.next();
-                    pagesCount=(int)Math.ceil(resultSet.getDouble(1) /PAGE_SIZE);
+                    pagesCount = (int) Math.ceil(resultSet.getDouble(1) / PAGE_SIZE);
                 }
             }
         } catch (SQLException e) {

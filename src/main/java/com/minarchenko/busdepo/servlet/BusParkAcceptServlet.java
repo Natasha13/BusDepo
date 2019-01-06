@@ -18,10 +18,9 @@ import java.io.IOException;
  */
 @WebServlet(name = "BusParkAcceptServlet", urlPatterns = {"/busParkAccept"})
 public class BusParkAcceptServlet extends HttpServlet {
+
     private static Logger logger = LoggerFactory.getLogger(BusParkAcceptServlet.class);
-
-    private BusParkService busParkService =new BusParkService();
-
+    private BusParkService busParkService = new BusParkService();
     @Resource(name = "BusDepo")
     private DataSource dataSource;
 
@@ -30,13 +29,20 @@ public class BusParkAcceptServlet extends HttpServlet {
             throws ServletException, IOException {
         String busPark_id = req.getParameter("busPark_id");
 
-        logger.info("BusParkAcceptServlet doPost. BusPark_ID : {}",busPark_id);
+        logger.info("BusParkAcceptServlet doPost. BusPark_ID : {}", busPark_id);
 
         busParkService.busParkAccept(busPark_id, dataSource);
 
         resp.sendRedirect("/busPark");
     }
 
+    public void setBusParkService(BusParkService busParkService) {
+        this.busParkService = busParkService;
+    }
+
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 }
 
 

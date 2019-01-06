@@ -20,7 +20,7 @@ import java.io.IOException;
 public class BusParkDeleteServlet extends HttpServlet {
     private static Logger logger = LoggerFactory.getLogger(BusParkDeleteServlet.class);
 
-    private BusParkService busParkService =new BusParkService();
+    private BusParkService busParkService = new BusParkService();
 
     @Resource(name = "BusDepo")
     private DataSource dataSource;
@@ -30,13 +30,20 @@ public class BusParkDeleteServlet extends HttpServlet {
             throws ServletException, IOException {
         String busPark_id = req.getParameter("busPark_id");
 
-        logger.info("BusParkDeleteServlet doPost. BusPark_ID : {}",busPark_id);
+        logger.info("BusParkDeleteServlet doPost. BusPark_ID : {}", busPark_id);
 
-        busParkService.busParkDelete(busPark_id,dataSource);
+        busParkService.busParkDelete(busPark_id, dataSource);
 
         resp.sendRedirect("/busPark");
     }
 
+    public void setBusParkService(BusParkService busParkService) {
+        this.busParkService = busParkService;
+    }
+
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 }
 
 

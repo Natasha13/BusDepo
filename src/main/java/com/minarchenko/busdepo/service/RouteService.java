@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
-import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,7 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RouteService implements Serializable {
+public class RouteService {
 
     private static final int PAGE_SIZE = 2;
     private static Logger logger = LoggerFactory.getLogger(RouteService.class);
@@ -25,14 +24,14 @@ public class RouteService implements Serializable {
         logger.debug("get all Routes for page {}", page);
 
         List<Route> routes = new ArrayList<Route>();
-        Integer offset=(page-1)*PAGE_SIZE;
+        Integer offset = (page - 1) * PAGE_SIZE;
 
         String sql = "SELECT id,route_name FROM routes users LIMIT ? OFFSET ?";
 
         try (Connection connection = dataSource.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                statement.setInt(1,PAGE_SIZE);
-                statement.setInt(2,offset);
+                statement.setInt(1, PAGE_SIZE);
+                statement.setInt(2, offset);
                 try (ResultSet resultSet = statement.executeQuery()) {
                     while (resultSet.next()) {
                         Route route = new Route(
@@ -65,7 +64,7 @@ public class RouteService implements Serializable {
     }
 
     public void routeDelete(String route_id, DataSource dataSource) {
-        logger.info("Delete Route record. Route_ID : {}",route_id);
+        logger.info("Delete Route record. Route_ID : {}", route_id);
 
         String sql = "DELETE FROM routes WHERE id=?";
 
@@ -79,21 +78,21 @@ public class RouteService implements Serializable {
         }
     }
 
-    public int countRoutesPages( DataSource dataSource) {
+    public int countRoutesPages(DataSource dataSource) {
         String sql = "SELECT count(*) from routes ";
 
-        int pagesCount=0;
+        int pagesCount = 0;
 
         QueryRunner runner = new QueryRunner(dataSource);
         ResultSetHandler<Integer> handler = resultSet -> {
             resultSet.next();
-            return (int)Math.ceil(resultSet.getDouble(1) /PAGE_SIZE);
+            return (int) Math.ceil(resultSet.getDouble(1) / PAGE_SIZE);
         };
 
         try {
-            pagesCount=runner.execute(sql, handler).get(0);
+            pagesCount = runner.execute(sql, handler).get(0);
 
-            logger.debug("Number of pages : {}",pagesCount);
+            logger.debug("Number of pages : {}", pagesCount);
 
             return pagesCount;
         } catch (SQLException e) {
