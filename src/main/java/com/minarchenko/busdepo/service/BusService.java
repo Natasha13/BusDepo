@@ -1,8 +1,6 @@
 package com.minarchenko.busdepo.service;
 
 import com.minarchenko.busdepo.model.Bus;
-import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.dbutils.ResultSetHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -94,20 +92,21 @@ public class BusService {
      */
     public int countBusesPages(DataSource dataSource) {
 
-        String sql = "SELECT count(*) from buses ";
+        String sql = "SELECT count(*) FROM buses ";
 
         logger.debug("Number of pages : {}", sql);
 
-        QueryRunner runner = new QueryRunner(dataSource);
-        ResultSetHandler<Integer> handler = resultSet -> {
-            resultSet.next();
-            return (int) Math.ceil(resultSet.getDouble(1) / PAGE_SIZE);
-        };
-        try {
-            return runner.execute(sql, handler).get(0);
+        int pageCount = 0;
+        try (Connection connection = dataSource.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    resultSet.next();
+                    pageCount = (int) Math.ceil(resultSet.getDouble(1) / PAGE_SIZE);
+                }
+            }
         } catch (SQLException e) {
             logger.error("SQL error in getBuses ", e);
-            return 0;
         }
+        return pageCount;
     }
 }

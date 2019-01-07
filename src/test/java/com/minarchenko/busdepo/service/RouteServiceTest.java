@@ -1,6 +1,6 @@
 package com.minarchenko.busdepo.service;
 
-import com.minarchenko.busdepo.model.Bus;
+import com.minarchenko.busdepo.model.Route;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,13 +11,15 @@ import java.sql.ResultSet;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-public class BusServiceTest {
+public class RouteServiceTest {
 
-    private BusService busService = new BusService();
+    private RouteService routeService = new RouteService();
     private DataSource dataSource = mock(DataSource.class);
     private Connection connection = mock(Connection.class);
     private PreparedStatement statement = mock(PreparedStatement.class);
@@ -29,51 +31,52 @@ public class BusServiceTest {
     }
 
     @Test
-    public void getBuses() throws Exception {
+    public void getRoutes() throws Exception {
 
         ResultSet resultSet = mock(ResultSet.class);
         when(statement.executeQuery()).thenReturn(resultSet);
         when(resultSet.next()).thenReturn(true, false);
         when(resultSet.getInt("id")).thenReturn(1);
-        when(resultSet.getString("bus_number")).thenReturn("bus_number_1");
+        when(resultSet.getString("route_name")).thenReturn("route_name_1");
 
-        List<Bus> buses = busService.getBuses(dataSource, 1);
+        List<Route> routes = routeService.getRoutes(dataSource, 1);
 
         verify(statement).setInt(1, 2);
         verify(statement).setInt(2, 0);
 
-        Bus bus = new Bus(1, "bus_number_1");
-        List<Bus> expected = Collections.singletonList(bus);
-        assertEquals(expected, buses);
+        Route route = new Route(1, "route_name_1");
+        List<Route> expected = Collections.singletonList(route);
+        assertEquals(expected,routes);
+
     }
 
     @Test
-    public void addBus() throws Exception {
-
-        busService.addBus("1", dataSource);
+    public void addRoute() throws Exception {
+        routeService.addRoute("1",dataSource);
 
         verify(statement).setString(1, "1");
         verify(statement).execute();
     }
 
     @Test
-    public void busDelete() throws Exception {
-        busService.busDelete("1", dataSource);
+    public void routeDelete() throws Exception {
+        routeService.routeDelete("1",dataSource);
 
         verify(statement).setString(1, "1");
         verify(statement).execute();
     }
 
     @Test
-    public void countBusesPages() throws Exception {
+    public void countRoutesPages() throws Exception {
+
         ResultSet resultSet = mock(ResultSet.class);
         when(statement.executeQuery()).thenReturn(resultSet);
         when(resultSet.next()).thenReturn(true, false);
         when(resultSet.getDouble(1)).thenReturn(7.0);
 
-        int countBusesPages = busService.countBusesPages(dataSource);
+        int countRoutesPages = routeService.countRoutesPages(dataSource);
 
-        assertEquals(4, countBusesPages);
+        assertEquals(4, countRoutesPages);
     }
-}
 
+}

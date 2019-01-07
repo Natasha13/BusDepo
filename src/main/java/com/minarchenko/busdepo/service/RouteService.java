@@ -83,22 +83,16 @@ public class RouteService {
 
         int pagesCount = 0;
 
-        QueryRunner runner = new QueryRunner(dataSource);
-        ResultSetHandler<Integer> handler = resultSet -> {
-            resultSet.next();
-            return (int) Math.ceil(resultSet.getDouble(1) / PAGE_SIZE);
-        };
-
-        try {
-            pagesCount = runner.execute(sql, handler).get(0);
-
-            logger.debug("Number of pages : {}", pagesCount);
-
-            return pagesCount;
+        try (Connection connection = dataSource.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    resultSet.next();
+                    pagesCount = (int) Math.ceil(resultSet.getDouble(1) / PAGE_SIZE);
+                }
+            }
         } catch (SQLException e) {
             logger.error("SQL error in countRoutesPages", e);
-            return 0;
         }
-
+        return pagesCount;
     }
 }

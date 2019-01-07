@@ -69,12 +69,17 @@ public class UserService {
 
         String sql = "INSERT INTO users (user_name, login, password, user_role ) values(?,?,?,?)";
 
-        QueryRunner runner = new QueryRunner(dataSource);
-        try {
-            runner.execute(sql, user_name, login, passwordHash, user_role);
+        try (Connection connection = dataSource.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setString(1, user_name);
+                statement.setString(2, login);
+                statement.setString(3, passwordHash);
+                statement.setString(4,user_role);
+                statement.execute();
+            }
         } catch (SQLException e) {
             logger.error("SQL error in addUser", e);
-        }
+    }
     }
 
     public void userDelete(String user_id, DataSource dataSource) {
@@ -82,9 +87,11 @@ public class UserService {
 
         String sql = "DELETE FROM users WHERE id=?";
 
-        QueryRunner runner = new QueryRunner(dataSource);
-        try {
-            runner.execute(sql, user_id);
+        try (Connection connection = dataSource.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setString(1, user_id);
+                statement.execute();
+            }
         } catch (SQLException e) {
             logger.error("SQL error in userDelete", e);
         }
@@ -95,19 +102,16 @@ public class UserService {
         String sql = "SELECT count(*) from users ";
         int pagesCount = 0;
 
-        QueryRunner runner = new QueryRunner(dataSource);
-        ResultSetHandler<Integer> handler = resultSet -> {
-            resultSet.next();
-            return (int) Math.ceil(resultSet.getDouble(1) / PAGE_SIZE);
-        };
-        try {
-            pagesCount = runner.execute(sql, handler).get(0);
-            logger.debug("Number of pages : {}", pagesCount);
-            return pagesCount;
+        try (Connection connection = dataSource.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    resultSet.next();
+                    pagesCount = (int) Math.ceil(resultSet.getDouble(1) / PAGE_SIZE);
+                }
+            }
         } catch (SQLException e) {
             logger.error("SQL error in countUsersPages", e);
-            return 0;
         }
+        return pagesCount;
     }
-
 }
