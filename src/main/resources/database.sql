@@ -29,7 +29,7 @@ CREATE TABLE bus_park(
   id INT NOT NULL AUTO_INCREMENT,
   bus_id INT NOT NULL UNIQUE ,
   user_id INT NOT NULL  UNIQUE ,
-  route_id INT NOT NULL  ,
+  route_id INT NOT NULL,
   accepted BOOLEAN NOT NULL ,
   FOREIGN KEY (bus_id) REFERENCES buses (Id) ON DELETE CASCADE,
   FOREIGN KEY (user_id) REFERENCES users (Id) ON DELETE CASCADE,

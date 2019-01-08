@@ -2,8 +2,6 @@ package com.minarchenko.busdepo.service;
 
 import com.minarchenko.busdepo.model.User;
 import org.apache.catalina.realm.MessageDigestCredentialHandler;
-import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.dbutils.ResultSetHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
